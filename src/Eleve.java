@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Eleve extends Personne {
-    private long numSAAQ;
+    private final long numSAAQ;
     private final LocalDate dateDebut;
     private LocalDate dateFin;
 
@@ -22,10 +22,6 @@ public class Eleve extends Personne {
 
     public long getNumSAAQ() {
         return this.numSAAQ;
-    }
-
-    public void setNumSAAQ(long numSAAQ) {
-        this.numSAAQ = numSAAQ;
     }
 
     public LocalDate getDateDebut() {
@@ -59,7 +55,6 @@ public class Eleve extends Personne {
                 ", nom=" + nom +
                 ", prenom=" + prenom +
                 ", telephone=" + telephone +
-                ", nbrSeances=" + activites.size() +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
                 "}";

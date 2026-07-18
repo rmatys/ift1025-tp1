@@ -12,6 +12,7 @@ public class Main {
     void main() {
         autoEcole.chargerEleves();
         autoEcole.chargerActivites();
+        autoEcole.chargerPaiements();
         autoEcole.chargerDepenses();
         autoEcole.chargerVoitures();
 
@@ -32,9 +33,10 @@ public class Main {
             System.out.println("2. Gestion des activités");
             System.out.println("3. Gestion des paiements");
             System.out.println("4. Gestion des véhicules");
-            System.out.println("5. Génération de rapports");
-            System.out.println("6. Aide pour les types de valeurs");
-            System.out.println("7. Quitter");
+            System.out.println("5. Autres dépenses");
+            System.out.println("6. Génération de rapports");
+            System.out.println("7. Aide pour les types de valeurs");
+            System.out.println("8. Quitter");
             System.out.println("============================================");
             System.out.print("Votre choix: ");
 
@@ -50,7 +52,7 @@ public class Main {
                         gestionActivites();
                         break;
                     case 3:
-                        gestionPaiements();
+                        gestionFinanciere();
                         break;
                     case 4:
                         gestionVoiture();
@@ -62,7 +64,7 @@ public class Main {
                         help();
                         continue;
                     case 7:
-                        System.out.println("Bonne journée!");
+                        System.out.println("Quitter.");
                         return;
                     default:
                         System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
@@ -106,6 +108,7 @@ public class Main {
                         afficherEleves();
                         break;
                     case 5:
+                        System.out.println("Retour au menu principal.");
                         return;
                     default:
                         System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
@@ -127,10 +130,10 @@ public class Main {
             System.out.println("--------------------------------------------");
             System.out.println("1. Planifier une nouvelle activité");
             System.out.println("2. Rechercher une activité");
-            System.out.println("3. Modifier une activité");
-            System.out.println("4. Annuler une activité");
-            System.out.println("5. Marquer une activité comme complétée");
-            System.out.println("6. Afficher les activités d'un élève");
+            System.out.println("3. Annuler une activité");
+            System.out.println("4. Marquer une activité comme complétée");
+            System.out.println("5. Afficher les activités d'un élève");
+            System.out.println("6. Afficher toutes les activités");
             System.out.println("7. Retour au menu principal");
             System.out.println("--------------------------------------------");
             System.out.print("Votre choix: ");
@@ -144,16 +147,64 @@ public class Main {
                         ajoutActivite();
                         break;
                     case 2:
+                        rechercheActivite();
                         break;
                     case 3:
+                        supprimerActivite();
                         break;
                     case 4:
+                        completerActivite();
                         break;
                     case 5:
+                        afficherActivitesEleve();
                         break;
                     case 6:
+                        afficherActivites();
                         break;
                     case 7:
+                        System.out.println("Retour au menu principal.");
+                        return;
+                    default:
+                        System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
+                        continue;
+                }
+                break;
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Erreur: il faut un chiffre (integer) qui correspond à l'une des options. Réessaie");
+            }
+        }
+    }
+
+    public void gestionFinanciere() {
+        System.out.println("--------------------------------------------");
+        System.out.println("            GESTION FINANCIÈRE");
+
+        while(true) {
+            System.out.println("--------------------------------------------");
+            System.out.println("1. Paiements");
+            System.out.println("2. Enregistrer une dépense du véhicule");
+            System.out.println("3. Enregistrer une dépense autre");
+            System.out.println("4. Retour au menu principal");
+            System.out.println("--------------------------------------------");
+            System.out.print("Votre choix: ");
+
+            try {
+                int choix = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choix) {
+                    case 1:
+                        gestionPaiements();
+                        break;
+                    case 2:
+                        ajoutDepenseVoiture();
+                        break;
+                    case 3:
+                        ajoutAutreDepense();
+                        break;
+                    case 4:
+                        System.out.println("Retour au menu principal.");
                         return;
                     default:
                         System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
@@ -179,7 +230,7 @@ public class Main {
             System.out.println("4. Rechercher un paiement");
             System.out.println("5. Afficher les paiements d'un élève");
             System.out.println("6. Afficher les impayés");
-            System.out.println("7. Retour au menu principal");
+            System.out.println("7. Retour au menu de gestion financière");
             System.out.println("--------------------------------------------");
             System.out.print("Votre choix: ");
 
@@ -189,8 +240,10 @@ public class Main {
 
                 switch (choix) {
                     case 1:
+
                         break;
                     case 2:
+                        ajoutPaiement();
                         break;
                     case 3:
                         break;
@@ -201,6 +254,7 @@ public class Main {
                     case 6:
                         break;
                     case 7:
+                        System.out.println("Retour au menu de gestion financière.");
                         return;
                     default:
                         System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
@@ -220,14 +274,14 @@ public class Main {
 
         while(true) {
             System.out.println("--------------------------------------------");
-            System.out.println("1. Ajouter une voiture");
-            System.out.println("1. Rechercher une voiture");
-            System.out.println("2. Modifier l'état d'une voiture");
-            System.out.println("3. Enregistrer une dépense");
-            System.out.println("4. Mettre à jour le kilométrage");
-            System.out.println("5. Afficher l'historique des dépenses");
-            System.out.println("6. Afficher la liste des voitures");
-            System.out.println("7. Retour au menu principal");
+            System.out.println("1. Ajouter une voiture à l'école");
+            System.out.println("2. Rechercher une voiture");
+            System.out.println("3. Modifier l'état d'une voiture");
+            System.out.println("4. Enregistrer une dépense");
+            System.out.println("5. Afficher l'historique des dépenses pour une voiture spécifique");
+            System.out.println("6. Afficher toutes les dépenses pour les voitures");
+            System.out.println("7. Afficher la liste des voitures");
+            System.out.println("8. Retour au menu principal");
             System.out.println("--------------------------------------------");
             System.out.print("Votre choix: ");
 
@@ -237,18 +291,28 @@ public class Main {
 
                 switch (choix) {
                     case 1:
+                        ajoutVoiture();
                         break;
                     case 2:
+                        rechercheVoiture();
                         break;
                     case 3:
+                        changerEtatVoiture();
                         break;
                     case 4:
+                        ajoutDepenseVoiture();
                         break;
                     case 5:
+                        afficherDepensesVoiture();
                         break;
                     case 6:
+                        afficherDepensesVoitures();
                         break;
                     case 7:
+                        afficherVoitures();
+                        break;
+                    case 8:
+                        System.out.println("Retour au menu principal.");
                         return;
                     default:
                         System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
@@ -290,6 +354,7 @@ public class Main {
                     case 4:
                         break;
                     case 5:
+                        System.out.println("Retour au menu principal.");
                         return;
                     default:
                         System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
@@ -340,6 +405,8 @@ public class Main {
                 LocalDate dateAuj = LocalDate.parse(auj, formatter);
 
                 autoEcole.ajouterEleve(new Eleve(numSAAQ, nom, prenom, adresse, tel, dateAuj));
+                System.out.println("Élève ajouté dans le système.");
+
                 break;
 
             } catch (NumberFormatException e) {
@@ -390,13 +457,42 @@ public class Main {
                     continue;
                 }
 
+                // *** Tester conflit d'horaire
+
                 autoEcole.ajouterActivite(new Activite(horaire, eleve, voiture, type, statut));
+                System.out.println("Activité ajoutée dans le système.");
+
                 break;
 
             } catch (NumberFormatException e) {
                 System.out.println("Erreur: le NumSAAQ ou la durée doit être un nombre valide. Réessaie");
             } catch (IllegalArgumentException e) {
                 System.out.println("Erreur: " + e.getMessage() + ". Réessaie");
+            }
+        }
+    }
+
+    public void ajoutPaiement() {
+        while(true) {
+            System.out.println("Recherche d'une activité par son ID");
+            System.out.print("ID de l'activité: ");
+
+            try {
+                int id = scanner.nextInt();
+                scanner.nextLine();
+
+                Activite activite = autoEcole.rechercherActivite(id);
+
+                if (activite == null) {
+                    System.out.println("Aucune activité attaché à cet identificateur.");
+                    return;
+                }
+
+                creationPaiement(activite);
+                System.out.println("Paiement ajouté dans le système pour l'activité ID: " + id);
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (int). Réessaie");
             }
         }
     }
@@ -436,6 +532,14 @@ public class Main {
                 }
 
                 autoEcole.ajouterDepenseVoiture(new DepenseVoiture(plaque, date, categorie, description, montant));
+                System.out.println("Dépense ajoutée dans le système");
+
+                Voiture voiture = autoEcole.rechercherVoiture(plaque);
+                if (voiture != null) {
+                    voiture.updateDepenses(autoEcole.getDepensesVoiture());
+                    System.out.println("Dépense ajoutée pour la voiture: " + plaque);
+                }
+
                 break;
 
             } catch (NumberFormatException e) {
@@ -480,6 +584,8 @@ public class Main {
                 }
 
                 autoEcole.ajouterAutreDepense(new AutreDepense(date, categorie, description, montant));
+                System.out.println("Autre dépense ajouté dans le système.");
+
                 break;
 
             } catch (NumberFormatException e) {
@@ -529,6 +635,8 @@ public class Main {
                 ArrayList<DepenseVoiture> depenses = autoEcole.trouverDepensesVoitureSelonPlaque(plaque);
 
                 autoEcole.ajouterVoiture(new Voiture(marque, plaque, annee, prix, kmAchat, etat, km, depenses));
+                System.out.println("Voiture ajoutée dans le système.");
+
                 break;
 
             } catch (NumberFormatException e) {
@@ -656,9 +764,37 @@ public class Main {
                 }
 
                 autoEcole.supprimerEleve(numSAAQ);
+                System.out.println(" - " + eleve);
+                System.out.println("L'élève à été supprimé");
 
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+    public void supprimerActivite() {
+        while(true) {
+            System.out.println("Recherche d'une activité par son ID");
+            System.out.print("ID de l'activité: ");
+
+            try {
+                int id = scanner.nextInt();
+                scanner.nextLine();
+
+                Activite activite = autoEcole.rechercherActivite(id);
+
+                if (activite == null) {
+                    System.out.println("Aucune activité attaché à cet identificateur.");
+                    return;
+                }
+
+                autoEcole.annulerActivite(id);
+                System.out.println(" - " + activite);
+                System.out.println("L'activité à été annulé");
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (int). Réessaie");
             }
         }
     }
@@ -670,6 +806,157 @@ public class Main {
         System.out.println("Liste de tous les élèves de l'école: ");
         for (Eleve eleve : autoEcole.getEleves()) System.out.println(" - " + eleve);
     }
+
+    public void afficherActivites() {
+        System.out.println("Liste de toutes les activités: ");
+        for (Activite activite : autoEcole.getActivites()) System.out.println(" - " + activite);
+    }
+
+    public void afficherActivitesEleve() {
+        while(true) {
+            System.out.println("Recherche d'un élève par son numéro SAAQ");
+            System.out.print("Numéro SAAQ: ");
+
+            try {
+                long numSAAQ = scanner.nextLong();
+                scanner.nextLine();
+
+                Eleve eleve = autoEcole.rechercherEleve(numSAAQ);
+
+                if (eleve == null) {
+                    System.out.println("Aucun élève attaché à ce numéro.");
+                    return;
+                }
+
+                System.out.println("Liste des activités de l'élève: ");
+                System.out.println(" * " + eleve);
+                int count = 0;
+                for (Activite activite : autoEcole.getActivites()) {
+                    if (activite.getEleve().equals(eleve)) {
+                        System.out.println(" - " + activite);
+                        count++;
+                    }
+                }
+                if (count == 0) System.out.println("Aucune activité associé à l'élève");
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+    public void afficherDepensesVoitures() {
+        System.out.println("Liste de toutes les dépenses pour les voitures: ");
+        for (DepenseVoiture depense : autoEcole.getDepensesVoiture()) System.out.println(" - " + depense);
+    }
+
+    public void afficherDepensesVoiture() {
+        while(true) {
+            System.out.println("Recherche d'une voiture par sa plaque d'immatriculation");
+            System.out.print("Plaque d'immatriculation: ");
+
+            try {
+                String plaque = scanner.nextLine();
+
+                Voiture voiture = autoEcole.rechercherVoiture(plaque);
+
+                if (voiture == null) {
+                    System.out.println("Voiture de l'extérieur. Comptabilisation des dépenses seulement pour les voitures de l'école. ");
+                    return;
+                }
+
+                System.out.println("Liste des dépenses pour la voiture: ");
+                System.out.println(" * " + voiture);
+                ArrayList<DepenseVoiture> depenses = voiture.getDepensesVoiture();
+                for (DepenseVoiture depense : depenses) { System.out.println(" - " + depense); }
+                if (depenses.isEmpty()) System.out.println("Aucune dépense associé à la voiture");
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+    public void afficherVoitures() {
+        System.out.println("Liste de toutes les voitures: ");
+        for (Voiture voiture : autoEcole.getVoitures()) System.out.println(" - " + voiture);
+    }
+
+
+    // Changer état
+
+    public void completerActivite() {
+        while(true) {
+            System.out.println("Recherche d'une activité par son ID");
+            System.out.print("ID de l'activité: ");
+
+            try {
+                int id = scanner.nextInt();
+                scanner.nextLine();
+
+                Activite activite = autoEcole.rechercherActivite(id);
+
+                if (activite == null) {
+                    System.out.println("Aucune activité attaché à cet identificateur.");
+                    return;
+                }
+
+                autoEcole.completerActivite(id);
+                System.out.println(" - " + activite);
+                System.out.println("L'activité à été marqué comme complété");
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (int). Réessaie");
+            }
+        }
+    }
+
+    public void changerEtatVoiture() {
+        while(true) {
+            System.out.println("Recherche d'une voiture par sa plaque d'immatriculation");
+            System.out.print("Plaque d'immatriculation: ");
+
+            try {
+                String plaque = scanner.nextLine();
+
+                Voiture voiture = autoEcole.rechercherVoiture(plaque);
+
+                if (voiture == null) {
+                    System.out.println("Voiture de l'extérieur (non modifiable).");
+                    return;
+                }
+
+                System.out.println("Voiture actuelle: ");
+                System.out.println(" - " + voiture);
+                subChangerEtatVoiture(voiture);
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+    public void subChangerEtatVoiture(Voiture voiture) {
+        while(true) {
+            System.out.println("Changement de l'état, choix disponibles  R (réparation), V (vendu), D (disponible).");
+            System.out.print("Votre choix: ");
+
+            try {
+                String etat = scanner.nextLine();
+
+                StatutVoiture statutVoiture = StatutVoiture.valueOf(etat);
+
+                voiture.setEtat(statutVoiture);
+                System.out.println("Changement effectué, la voiture est maintenant dans l'état " + statutVoiture.getLibelle());
+
+                break;
+
+            } catch (Exception e) {
+                System.out.println("Erreur: les options sont R, V et D. Réessaie");
+            }
+        }
+    }
+
 
     // Autres méthodes
 
@@ -736,9 +1023,55 @@ public class Main {
     public void sauvegarde() {
         autoEcole.sauvegarderEleves();
         autoEcole.sauvegarderActivites();
+        autoEcole.sauvegarderPaiements();
         autoEcole.sauvegarderDepensesVoiture();
         autoEcole.sauvegarderAutresDepenses();
         autoEcole.sauvegarderVoitures();
         System.out.println("Sauvegarde terminée");
+    }
+
+    /**
+     * Pour améliorer la lisibilité de la méthode ajoutPaiement()
+     * @param activite
+     */
+    private void creationPaiement(Activite activite) {
+        int bonneLongueur = 4;
+
+        while (true) {
+            System.out.println("Ajout d'une paiement pour l'activité avec l'ID " + activite.getId());
+            System.out.println(" - " + activite);
+            System.out.println("Donner les informations sous ce format:");
+            System.out.println("Date,StatutPaiement,MethodePaiement");
+            System.out.println("ex: 123456789,12-04-2026,P,E");
+            System.out.print("Votre entrée: ");
+            String ligne = scanner.nextLine();
+
+            String[] infosPaiement = ligne.split(",");
+
+            if (infosPaiement.length != bonneLongueur) {
+                System.out.println("Erreur: il faut exactement " + bonneLongueur + " informations séparées par des virgules. Réessaie");
+                continue;
+            }
+
+            try {
+                for (int i=0; i<bonneLongueur; i++) {
+                    infosPaiement[i] = infosPaiement[i].trim();
+                }
+
+                LocalDate date = LocalDate.parse(infosPaiement[0], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                StatutPaiement statut = StatutPaiement.valueOf(infosPaiement[1]);
+                MethodePaiement methode = MethodePaiement.valueOf(infosPaiement[2]);
+                Eleve eleve = activite.getEleve();
+
+                autoEcole.ajouterPaiement(new Paiement(date, statut, activite, methode, eleve));
+
+                break;
+
+            } catch (NumberFormatException e) {
+                System.out.println("Erreur: le NumSAAQ ou la durée doit être un nombre valide. Réessaie");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Erreur: " + e.getMessage() + ". Réessaie");
+            }
+        }
     }
 }

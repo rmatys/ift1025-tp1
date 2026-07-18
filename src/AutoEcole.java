@@ -1,3 +1,6 @@
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AutoEcole {
@@ -69,6 +72,11 @@ public class AutoEcole {
         Activite activite = rechercherActivite(id);
         if (activite != null) {
             activite.setStatut(StatutActivite.C);
+
+            TypeActivite type = activite.getType();
+            if (type.equals(TypeActivite.EP) || type.equals(TypeActivite.EPL)) {
+                activite.getEleve().setDateFin(LocalDate.now());
+            }
         }
     }
 
@@ -137,9 +145,8 @@ public class AutoEcole {
     // Lecture des fichiers CSV
 
     public void chargerEleves() { eleves = CSV.lireEleves(); }
-    public void chargerVoitures() {
-        voitures = CSV.lireVoitures(depensesVoiture);
-    }
+    public void chargerVoitures() { voitures = CSV.lireVoitures(depensesVoiture); }
+    public void chargerPaiements() { paiements = CSV.lirePaiements(activites, eleves); }
     public void chargerActivites() { activites = CSV.lireActivites(eleves,voitures); }
     public void chargerDepenses() {
         depensesVoiture = CSV.lireDepensesVoiture();
@@ -149,9 +156,8 @@ public class AutoEcole {
     // Sauvegarde
 
     public void sauvegarderEleves() { CSV.ecrireEleves(eleves); }
-    public void sauvegarderActivites() {
-        CSV.ecrireActivites(activites);
-    }
+    public void sauvegarderActivites() { CSV.ecrireActivites(activites); }
+    public void sauvegarderPaiements() { CSV.ecrirePaiements(paiements);}
     public void sauvegarderDepensesVoiture() { CSV.ecrireDepensesVoiture(depensesVoiture); }
     public void sauvegarderAutresDepenses() { CSV.ecrireAutresDepenses(autresDepenses); }
     public void sauvegarderVoitures() {
@@ -209,4 +215,9 @@ public class AutoEcole {
     public int nombrePaiements() { return paiements.size(); }
 
     public ArrayList<Eleve> getEleves() { return eleves; }
+    public ArrayList<Activite> getActivites() { return activites; }
+    public ArrayList<Paiement> getPaiements() { return paiements; }
+    public ArrayList<Voiture> getVoitures() { return voitures; }
+    public ArrayList<DepenseVoiture> getDepensesVoiture() { return depensesVoiture; }
+    public ArrayList<AutreDepense> getAutresDepenses() { return autresDepenses; }
 }

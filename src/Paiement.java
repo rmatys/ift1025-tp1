@@ -1,6 +1,9 @@
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 
+/**
+ * Création d'un paiement lorsque l'activité est
+ */
 public class Paiement {
     private static char prefix = 'F';
     private static int annee;
@@ -32,13 +35,14 @@ public class Paiement {
         this.typeActivite = activite.getType();
     }
 
-    public Paiement(String id, LocalDate datePaiement, StatutPaiement statutPaiement,
+    public Paiement(String id, double montant, LocalDate datePaiement,
+                    StatutPaiement statutPaiement, double montantRestant,
                     Activite activite, MethodePaiement methodePaiement, Eleve eleve) {
         this.idPaiement = id;
-        this.montant = activite.getMontant();
+        this.montant = montant;
         this.datePaiement = datePaiement;
         this.statutPaiement = statutPaiement;
-        this.montantRestant = activite.getMontant();
+        this.montantRestant = montantRestant;
         this.activite = activite;
         this.methodePaiement = methodePaiement;
         this.eleve = eleve;

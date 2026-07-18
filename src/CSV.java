@@ -94,7 +94,6 @@ public class CSV {
     }
 
     public static void ecrireActivites(ArrayList<Activite> activites) {
-
         try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "activites" + YEAR + ".csv"))) {
 
             pw.println("ID_Activite,Type,NumSAAQ,Date,Heure,Duree,Montant,Statut,Plaque");
@@ -109,6 +108,74 @@ public class CSV {
                         activite.getMontant() + "," +
                         activite.getStatut() + "," +
                         activite.getVoiture().getPlaque());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Paiements
+    public static ArrayList<Paiement> lirePaiements(ArrayList<Activite> activites, ArrayList<Eleve> eleves) {
+        ArrayList<Paiement> paiements = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "paiements" + YEAR + ".csv"))) {
+            String ligne = br.readLine();
+
+            while ((ligne = br.readLine()) != null) {
+                String[] t = ligne.split(",");
+
+
+                String idPaiement = t[0];
+                int idActivite = Integer.parseInt(t[1]);
+                long numSAAQ = Long.parseLong(t[2]);
+                double montant = Double.parseDouble(t[3]);
+                double montantRestant = Double.parseDouble(t[4]);
+                LocalDate date = LocalDate.parse(t[5], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                StatutPaiement statut = StatutPaiement.valueOf(t[6]);
+                MethodePaiement methode = MethodePaiement.valueOf(t[7]);
+                TypeActivite motif = TypeActivite.valueOf(t[8]);
+
+                Activite activite = null;
+                for (Activite a : activites) {
+                    if (a.getId() == idActivite) activite = a;
+                }
+
+                Eleve eleve = null;
+                for (Eleve e : eleves) {
+                    if (e.getNumSAAQ() == numSAAQ) eleve = e;
+                }
+
+                if (activite == null || eleve == null) {
+                    System.err.println("Erreur: chaque paiement devrait avoir une activité et un élève. Skipping ID: " + idPaiement);
+                    continue;
+                }
+
+                paiements.add(new Paiement(idPaiement, montant, date, statut, montantRestant, activite, methode, eleve));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return paiements;
+    }
+
+    public static void ecrirePaiements(ArrayList<Paiement> paiements) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "paiements" + YEAR + ".csv"))) {
+
+            pw.println("ID_Paiement,ID_Activite,NumSAAQ,Montant,MontantRestant,Date,Statut,Methode,Motif");
+
+            for (Paiement paiement : paiements) {
+                pw.println(paiement.getId() + "," +
+                        paiement.getActivite().getId() + "," +
+                        paiement.getEleve().getNumSAAQ() + "," +
+                        paiement.getMontant() + "," +
+                        paiement.getMontantRestant() + "," +
+                        paiement.getDate() + "," +
+                        paiement.getStatutPaiement() + "," +
+                        paiement.getMethodePaiement() + "," +
+                        paiement.getTypeActivite());
             }
 
         } catch (Exception e) {
