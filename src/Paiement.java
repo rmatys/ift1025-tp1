@@ -11,7 +11,7 @@ public class Paiement {
 
     private final String idPaiement;
     private final double montant;
-    private final LocalDate datePaiement;
+    private LocalDate datePaiement;
     private StatutPaiement statutPaiement;
     private double montantRestant;
     private final Activite activite;
@@ -58,6 +58,9 @@ public class Paiement {
     public MethodePaiement getMethodePaiement() { return this.methodePaiement; }
     public Eleve getEleve() { return this.eleve; }
     public TypeActivite getTypeActivite() { return this.typeActivite; }
+
+    public void setEtat(StatutPaiement statut) { this.statutPaiement = statut; }
+    public void setMontantRestant(double montantRestant) { this.montantRestant = montantRestant; }
 
     public static void setPrefix(char nouveauPrefix) { prefix = nouveauPrefix; }
 

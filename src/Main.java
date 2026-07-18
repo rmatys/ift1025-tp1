@@ -246,12 +246,16 @@ public class Main {
                         ajoutPaiement();
                         break;
                     case 3:
+                        changerEtatPaiement();
                         break;
                     case 4:
+                        recherchePaiement();
                         break;
                     case 5:
+                        afficherPaiementsEleve();
                         break;
                     case 6:
+                        afficherPaiementsImpayes();
                         break;
                     case 7:
                         System.out.println("Retour au menu de gestion financière.");
@@ -698,7 +702,7 @@ public class Main {
         }
     }
 
-    public void recherchePaiements() {
+    public void recherchePaiement() {
         while(true) {
             System.out.println("Recherche d'un paiement par son ID (format \"F-AAAA-XXXXX\")");
             System.out.print("ID: ");
@@ -882,6 +886,48 @@ public class Main {
         for (Voiture voiture : autoEcole.getVoitures()) System.out.println(" - " + voiture);
     }
 
+    public void afficherPaiementsEleve() {
+        while(true) {
+            System.out.println("Recherche d'un élève par son numéro SAAQ");
+            System.out.print("Numéro SAAQ: ");
+
+            try {
+                long numSAAQ = scanner.nextLong();
+                scanner.nextLine();
+
+                Eleve eleve = autoEcole.rechercherEleve(numSAAQ);
+
+                if (eleve == null) {
+                    System.out.println("Aucun élève attaché à ce numéro.");
+                    return;
+                }
+
+                System.out.println("Liste des paiements pour cet élève: ");
+                System.out.println(" * " + eleve);
+                ArrayList<Paiement> paiements = autoEcole.getPaiements();
+                for (Paiement paiement : paiements) { System.out.println(" - " + paiement); }
+                if (paiements.isEmpty()) System.out.println("Aucun paiement associé à cet élève.");
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+    public void afficherPaiementsImpayes() {
+        System.out.println("Liste de tous les paiements impayés: ");
+
+        int count = 0;
+        for (Paiement paiement : autoEcole.getPaiements()) {
+            if (paiement.getStatutPaiement().equals(StatutPaiement.I)) {
+                System.out.println(" - " + paiement);
+                count++;
+            }
+        }
+
+        if (count == 0) System.out.println("Aucun paiement impayé.");
+    }
+
 
     // Changer état
 
@@ -953,6 +999,81 @@ public class Main {
 
             } catch (Exception e) {
                 System.out.println("Erreur: les options sont R, V et D. Réessaie");
+            }
+        }
+    }
+
+    public void changerEtatPaiement() {
+        while(true) {
+            System.out.println("Recherche d'un paiement par son identifiant (format : F-AAAA-XXXXX)");
+            System.out.print("Identifiant de paiement: ");
+
+            try {
+                String id = scanner.nextLine();
+
+                Paiement paiement = autoEcole.rechercherPaiement(id);
+
+                if (paiement == null) {
+                    System.out.println("Aucun paiement attaché à cet identificateur.");
+                    return;
+                }
+
+                System.out.println("Paiement actuel: ");
+                System.out.println(" - " + paiement);
+                subChangerEtatPaiement(paiement);
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+    public void subChangerEtatPaiement(Paiement paiement) {
+        while(true) {
+            System.out.println("Changement de l'état, choix disponibles  P (payé), I (impayé), PP (partiellement payé).");
+            System.out.print("Votre choix: ");
+
+            try {
+                String etat = scanner.nextLine();
+
+                StatutPaiement statutPaiement = StatutPaiement.valueOf(etat);
+
+                if (statutPaiement.equals(StatutPaiement.P)) {
+
+                } else if (statutPaiement.equals(StatutPaiement.PP)) {
+                    montantPaye(paiement);
+                }
+
+                paiement.setEtat(statutPaiement);
+                System.out.println("Changement effectué, le paiement est maintenant dans l'état " + statutPaiement.getLibelle());
+
+                break;
+
+            } catch (Exception e) {
+                System.out.println("Erreur: les options sont P, I et PP. Réessaie");
+            }
+        }
+    }
+
+    public void montantPaye(Paiement paiement) {
+        while(true) {
+            System.out.println("Paiement à été partiellement payé.");
+            System.out.print("Montant restant: ");
+
+            try {
+                double montantRestant = scanner.nextDouble();
+                scanner.nextLine();
+
+                if (montantRestant > paiement.getMontantRestant()) {
+                    System.out.println("Erreur: le montant restant doit être plus petit que ce qu'il y avait avant. Réessaie");
+                    continue;
+                }
+
+                paiement.setMontantRestant(montantRestant);
+
+                break;
+            } catch (Exception e) {
+                System.out.println("Erreur: le montant restant doit être un nombre à virgule (double).");
             }
         }
     }
