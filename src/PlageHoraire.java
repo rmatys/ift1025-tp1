@@ -25,11 +25,6 @@ public class PlageHoraire {
                 && this.getHeureFin().isAfter(horaire.getHeureDebut());
     }
 
-    @Override
-    public String toString() {
-        return date + " " + heureDebut + "-" + this.getHeureFin();
-    }
-
     public LocalDate getDate() { return this.date; }
     public LocalTime getHeureDebut() { return this.heureDebut; }
     public LocalTime getHeureFin() { return this.heureDebut.plusMinutes(duree); }
@@ -38,5 +33,10 @@ public class PlageHoraire {
 
     public static boolean datesDifferente(PlageHoraire horaire1, PlageHoraire horaire2) {
         return !horaire1.date.isEqual(horaire2.getDate());
+    }
+
+    @Override
+    public String toString() {
+        return date + " " + heureDebut + "-" + this.getHeureFin();
     }
 }

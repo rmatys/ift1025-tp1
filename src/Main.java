@@ -20,7 +20,9 @@ public class Main {
         sauvegarde();
     }
 
-    public boolean gestionAutoEcole() {
+    // Menus
+
+    public void gestionAutoEcole() {
         System.out.println("============================================");
         System.out.println("                AUTO-ÉCOLE");
 
@@ -45,18 +47,23 @@ public class Main {
                         gestionEleves();
                         break;
                     case 2:
+                        gestionActivites();
                         break;
                     case 3:
+                        gestionPaiements();
                         break;
                     case 4:
+                        gestionVoiture();
                         break;
                     case 5:
+                        gestionRapports();
                         break;
                     case 6:
                         help();
                         continue;
                     case 7:
-                        return true;
+                        System.out.println("Bonne journée!");
+                        return;
                     default:
                         System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
                 }
@@ -90,10 +97,13 @@ public class Main {
                         ajoutEleve();
                         break;
                     case 2:
+                        rechercheEleve();
                         break;
                     case 3:
+                        supprimerEleve();
                         break;
                     case 4:
+                        afficherEleves();
                         break;
                     case 5:
                         return;
@@ -165,10 +175,10 @@ public class Main {
             System.out.println("--------------------------------------------");
             System.out.println("1. Générer une facture pour une activité");
             System.out.println("2. Enregistrer un paiement");
-            System.out.println("3. Modifier une activité");
-            System.out.println("4. Annuler une activité");
-            System.out.println("5. Marquer une activité comme complétée");
-            System.out.println("6. Afficher les activités d'un élève");
+            System.out.println("3. Modifier le statut d'un paiement");
+            System.out.println("4. Rechercher un paiement");
+            System.out.println("5. Afficher les paiements d'un élève");
+            System.out.println("6. Afficher les impayés");
             System.out.println("7. Retour au menu principal");
             System.out.println("--------------------------------------------");
             System.out.print("Votre choix: ");
@@ -179,7 +189,6 @@ public class Main {
 
                 switch (choix) {
                     case 1:
-                        ajoutActivite();
                         break;
                     case 2:
                         break;
@@ -205,6 +214,98 @@ public class Main {
         }
     }
 
+    public void gestionVoiture() {
+        System.out.println("--------------------------------------------");
+        System.out.println("            GESTION DES VOITURES");
+
+        while(true) {
+            System.out.println("--------------------------------------------");
+            System.out.println("1. Ajouter une voiture");
+            System.out.println("1. Rechercher une voiture");
+            System.out.println("2. Modifier l'état d'une voiture");
+            System.out.println("3. Enregistrer une dépense");
+            System.out.println("4. Mettre à jour le kilométrage");
+            System.out.println("5. Afficher l'historique des dépenses");
+            System.out.println("6. Afficher la liste des voitures");
+            System.out.println("7. Retour au menu principal");
+            System.out.println("--------------------------------------------");
+            System.out.print("Votre choix: ");
+
+            try {
+                int choix = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choix) {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        return;
+                    default:
+                        System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
+                        continue;
+                }
+                break;
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Erreur: il faut un chiffre (integer) qui correspond à l'une des options. Réessaie");
+            }
+        }
+    }
+
+    public void gestionRapports() {
+        System.out.println("--------------------------------------------");
+        System.out.println("            GESTION DES RAPPORTS");
+
+        while(true) {
+            System.out.println("--------------------------------------------");
+            System.out.println("1. Rapport des élèves");
+            System.out.println("2. Rapport de revenus");
+            System.out.println("3. Rapport des dépenses de voiture");
+            System.out.println("4. Rapport des autres dépenses");
+            System.out.println("5. Retour au menu principal");
+            System.out.println("--------------------------------------------");
+            System.out.print("Votre choix: ");
+
+            try {
+                int choix = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choix) {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        return;
+                    default:
+                        System.out.println("Erreur: il faut un chiffre qui correspond à l'une des options. Réessaie");
+                        continue;
+                }
+                break;
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Erreur: il faut un chiffre (integer) qui correspond à l'une des options. Réessaie");
+            }
+        }
+    }
+
+
+    // Ajouts
+
     public void ajoutEleve() {
         int bonneLongueur = 5;
 
@@ -213,7 +314,7 @@ public class Main {
             System.out.println("Donner les informations sous ce format:");
             System.out.println("NumSAAQ,Nom,Prenom,Adresse,Telephone");
             System.out.println("ex: 123456789,Dupont,Marie,adr1,5145551234");
-            System.out.print("Ici - ");
+            System.out.print("Votre entrée: ");
             String ligne = scanner.nextLine();
 
             String[] infosEleve = ligne.split(",");
@@ -257,7 +358,7 @@ public class Main {
             System.out.println("Donner les informations sous ce format:");
             System.out.println("Type,NumSAAQ,Date,Heure,Duree,Statut,Plaque");
             System.out.println("ex: LPA,123456789,12-04-2026,9:00,90,C,ABC123");
-            System.out.print("Ici - ");
+            System.out.print("Votre entrée: ");
             String ligne = scanner.nextLine();
 
             String[] infosActivite = ligne.split(",");
@@ -308,7 +409,7 @@ public class Main {
             System.out.println("Donner les informations sous ce format:");
             System.out.println("Plaque,Date,Categorie,Description,Montant");
             System.out.println("ex: ABC123,25-05-2026,R,Remplacement freins,350.00");
-            System.out.print("Ici - ");
+            System.out.print("Votre entrée: ");
             String ligne = scanner.nextLine();
 
             String[] infosDepense = ligne.split(",");
@@ -353,7 +454,7 @@ public class Main {
             System.out.println("Donner les informations sous ce format:");
             System.out.println("Date,Categorie,Description,Montant");
             System.out.println("ex: 25-05-2026,P,Publicité école,350.00");
-            System.out.print("Ici - ");
+            System.out.print("Votre entrée: ");
             String ligne = scanner.nextLine();
 
             String[] infosDepense = ligne.split(",");
@@ -397,7 +498,7 @@ public class Main {
             System.out.println("Donner les informations sous ce format:");
             System.out.println("Marque,Plaque,Annee,Prix,KmAchat,Etat,Km");
             System.out.println("ex: Toyota,ABC123,2020,25000.00,15000,D,45230");
-            System.out.print("Ici - ");
+            System.out.print("Votre entrée: ");
             String ligne = scanner.nextLine();
 
             String[] infosVoiture = ligne.split(",");
@@ -437,6 +538,140 @@ public class Main {
             }
         }
     }
+
+
+    // Recherche
+
+    public void rechercheEleve() {
+        while(true) {
+            System.out.println("Recherche d'un élève par son numéro SAAQ");
+            System.out.print("Numéro SAAQ: ");
+
+             try {
+                 long numSAAQ = scanner.nextLong();
+                 scanner.nextLine();
+
+                 Eleve eleve = autoEcole.rechercherEleve(numSAAQ);
+
+                 if (eleve == null) {
+                     System.out.println("Aucun élève attaché à ce numéro.");
+                     return;
+                 }
+
+                 System.out.println(" - " + eleve);
+
+             } catch (Exception e) {
+                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
+             }
+        }
+    }
+
+    public void rechercheActivite() {
+        while(true) {
+            System.out.println("Recherche d'une activité par son ID");
+            System.out.print("ID de l'activité: ");
+
+            try {
+                int id = scanner.nextInt();
+                scanner.nextLine();
+
+                Activite activite = autoEcole.rechercherActivite(id);
+
+                if (activite == null) {
+                    System.out.println("Aucune activité attaché à cet identificateur.");
+                    return;
+                }
+
+                System.out.println(" - " + activite);
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (int). Réessaie");
+            }
+        }
+    }
+
+    public void recherchePaiements() {
+        while(true) {
+            System.out.println("Recherche d'un paiement par son ID (format \"F-AAAA-XXXXX\")");
+            System.out.print("ID: ");
+
+            try {
+                String id = scanner.nextLine();
+
+                Paiement paiement = autoEcole.rechercherPaiement(id);
+
+                if (paiement == null) {
+                    System.out.println("Aucun paiement attaché à cet identifiant.");
+                    return;
+                }
+
+                System.out.println(" - " + paiement);
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un identifiant (String format \"F-AAAA-XXXXX\"). Réessaie");
+            }
+        }
+    }
+
+    public void rechercheVoiture() {
+        while(true) {
+            System.out.println("Recherche d'une voiture par sa plaque d'immatriculation");
+            System.out.print("Plaque d'immatriculation: ");
+
+            try {
+                String plaque = scanner.nextLine();
+
+                Voiture voiture = autoEcole.rechercherVoiture(plaque);
+
+                if (voiture == null) {
+                    System.out.println("Voiture de l'extérieur.");
+                    return;
+                }
+
+                System.out.println(" - " + voiture);
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+
+    // Supprimer
+
+    public void supprimerEleve() {
+        while(true) {
+            System.out.println("Recherche d'un élève par son numéro SAAQ");
+            System.out.print("Numéro SAAQ: ");
+
+            try {
+                long numSAAQ = scanner.nextLong();
+                scanner.nextLine();
+
+                Eleve eleve = autoEcole.rechercherEleve(numSAAQ);
+
+                if (eleve == null) {
+                    System.out.println("Aucun élève attaché à ce numéro.");
+                    return;
+                }
+
+                autoEcole.supprimerEleve(numSAAQ);
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+
+    // Afficher
+
+    public void afficherEleves() {
+        System.out.println("Liste de tous les élèves de l'école: ");
+        for (Eleve eleve : autoEcole.getEleves()) System.out.println(" - " + eleve);
+    }
+
+    // Autres méthodes
 
     public void help() {
         System.out.println("------------------------------------------------------");

@@ -53,4 +53,17 @@ public class Activite {
     public TypeActivite getType() { return this.typeActivite; }
     public StatutActivite getStatut() { return this.statutActivite; }
     public void setStatut(StatutActivite statut) { this.statutActivite = statut; }
+
+    @Override
+    public String toString() {
+        return "Activité{id=" + idActivite +
+                ", date=" + horaire.getDate() +
+                ", heure=" + horaire.getHeureDebut() +
+                ", durée=" + horaire.getDuree() +
+                ", numSaaqEleve=" + eleve.getNumSAAQ() +
+                ", plaque=" + voiture.getPlaque() +
+                ", type=" + typeActivite.getLibelle() +
+                ", statut=" + statutActivite.getLibelle() +
+                "}";
+    }
 }

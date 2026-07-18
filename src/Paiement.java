@@ -32,6 +32,19 @@ public class Paiement {
         this.typeActivite = activite.getType();
     }
 
+    public Paiement(String id, LocalDate datePaiement, StatutPaiement statutPaiement,
+                    Activite activite, MethodePaiement methodePaiement, Eleve eleve) {
+        this.idPaiement = id;
+        this.montant = activite.getMontant();
+        this.datePaiement = datePaiement;
+        this.statutPaiement = statutPaiement;
+        this.montantRestant = activite.getMontant();
+        this.activite = activite;
+        this.methodePaiement = methodePaiement;
+        this.eleve = eleve;
+        this.typeActivite = activite.getType();
+    }
+
     public String getId() { return this.idPaiement; }
     public double getMontant() { return this.montant; }
     public LocalDate getDate() { return this.datePaiement; }
@@ -43,4 +56,16 @@ public class Paiement {
     public TypeActivite getTypeActivite() { return this.typeActivite; }
 
     public static void setPrefix(char nouveauPrefix) { prefix = nouveauPrefix; }
+
+    @Override
+    public String toString() {
+        return "Paiement{id=" + idPaiement +
+                ", montant=" + montant +
+                ", montantRestant=" + montantRestant +
+                ", datePaiement=" + datePaiement +
+                ", statut=" + statutPaiement +
+                ", typeActivite=" + typeActivite +
+                ", numSaaqEleve=" + eleve.getNumSAAQ() +
+                "}";
+    }
 }

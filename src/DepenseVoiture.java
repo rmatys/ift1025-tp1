@@ -40,4 +40,15 @@ public class DepenseVoiture {
     public TypeDepenseVoiture getCategorie() { return typeDepenseVoiture; }
     public String getDescription() { return description; }
     public double getMontant() { return montant; }
+
+    @Override
+    public String toString() {
+        return "AutreDepense{id=" + idDepense +
+                ", plaque=" + plaque +
+                ", date=" + date +
+                ", type=" + typeDepenseVoiture.getLibelle() +
+                ", description=" + description +
+                ", montant=" + montant +
+                "}";
+    }
 }

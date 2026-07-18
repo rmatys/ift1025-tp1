@@ -34,4 +34,14 @@ public class AutreDepense {
     public TypeAutreDepense getCategorie() { return typeAutreDepense; }
     public String getDescription() { return description; }
     public double getMontant() { return montant; }
+
+    @Override
+    public String toString() {
+        return "AutreDepense{id=" + idDepense +
+                ", date=" + date +
+                ", type=" + typeAutreDepense.getLibelle() +
+                ", description=" + description +
+                ", montant=" + montant +
+                "}";
+    }
 }

@@ -61,4 +61,16 @@ public class Voiture {
 
     public StatutVoiture getEtat() { return statutVoiture; }
     public void setEtat(StatutVoiture etat) { this.statutVoiture = etat; }
+
+    @Override
+    public String toString() {
+        return "Voiture{plaque=" + plaqueImmatriculation +
+                ", marque=" + marque +
+                ", anneeFabrication=" + anneeFabrication +
+                ", prixAchat=" + prixAchat +
+                ", kilometrageAchat=" + kilometrageAchat +
+                ", statutVoiture=" + statutVoiture.getLibelle() +
+                ", kilometrageActuel=" + kilometrageActuel +
+                "}";
+    }
 }
