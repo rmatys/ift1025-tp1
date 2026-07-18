@@ -1,7 +1,7 @@
 public enum MethodePaiement {
-    ESPECE("Espèces"),
-    CARTE("Carte"),
-    VIREMENT("Virement");
+    E("Espèces"),
+    C("Carte"),
+    V("Virement");
 
     private final String libelle;
 

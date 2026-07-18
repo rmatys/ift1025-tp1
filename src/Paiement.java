@@ -16,25 +16,25 @@ public class Paiement {
     private final Eleve eleve;
     private final TypeActivite typeActivite;
 
-    public Paiement(double montant, LocalDate datePaiement, StatutPaiement statutPaiement,
-                    Activite activite, MethodePaiement methodePaiement, Eleve eleve) {
+    public Paiement(LocalDate datePaiement, StatutPaiement statutPaiement, Activite activite,
+                    MethodePaiement methodePaiement, Eleve eleve) {
         annee = LocalDate.now().getYear();
         numeroSequentiel++;
 
         this.idPaiement = prefix + "-" + annee + "-" + numeroSequentiel;
-        this.montant = montant;
+        this.montant = activite.getMontant();
         this.datePaiement = datePaiement;
         this.statutPaiement = statutPaiement;
-        this.montantRestant = montant;
+        this.montantRestant = activite.getMontant();
         this.activite = activite;
         this.methodePaiement = methodePaiement;
         this.eleve = eleve;
-        this.typeActivite = activite.getTypeActivite();
+        this.typeActivite = activite.getType();
     }
 
-    public String getIdPaiement() { return this.idPaiement; }
+    public String getId() { return this.idPaiement; }
     public double getMontant() { return this.montant; }
-    public LocalDate getDatePaiement() { return this.datePaiement; }
+    public LocalDate getDate() { return this.datePaiement; }
     public StatutPaiement getStatutPaiement() {return this.statutPaiement; }
     public double getMontantRestant() { return this.montantRestant; }
     public Activite getActivite() { return this.activite; }

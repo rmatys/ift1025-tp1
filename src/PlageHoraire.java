@@ -1,10 +1,23 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class PlageHoraire {
-    private LocalDate date;
-    private LocalTime heureDebut;
-    private int duree;
+    private final LocalDate date;
+    private final LocalTime heureDebut;
+    private final int duree;
+
+    public PlageHoraire(LocalDate date, LocalTime heureDebut, int duree) {
+        this.date = date;
+        this.heureDebut = heureDebut;
+        this.duree = duree;
+    }
+
+    public PlageHoraire(String date, String heureDebut, int duree) {
+        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        this.heureDebut = LocalTime.parse(heureDebut, DateTimeFormatter.ofPattern("HH:mm"));
+        this.duree = duree;
+    }
 
     public boolean intersect(PlageHoraire horaire) {
         if (datesDifferente(this, horaire)) return false;
@@ -21,7 +34,7 @@ public class PlageHoraire {
     public LocalTime getHeureDebut() { return this.heureDebut; }
     public LocalTime getHeureFin() { return this.heureDebut.plusMinutes(duree); }
     public int getDuree() { return duree; }
-    public double getDureeHeure() { return (double) duree / 60; }
+    public double getNombreHeure() { return (double) duree / 60; }
 
     public static boolean datesDifferente(PlageHoraire horaire1, PlageHoraire horaire2) {
         return !horaire1.date.isEqual(horaire2.getDate());
