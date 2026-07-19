@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -240,7 +242,7 @@ public class Main {
 
                 switch (choix) {
                     case 1:
-
+                        genererFacture();
                         break;
                     case 2:
                         ajoutPaiement();
@@ -350,12 +352,16 @@ public class Main {
 
                 switch (choix) {
                     case 1:
+                        Rapports.genererRapportEleves(autoEcole.getEleves());
                         break;
                     case 2:
+                        Rapports.genererRapportRevenus(autoEcole.getActivites(), autoEcole.getPaiements());
                         break;
                     case 3:
+                        Rapports.genererRapportDepensesVoiture(autoEcole.getDepensesVoiture());
                         break;
                     case 4:
+                        Rapports.genererRapportAutresDepenses(autoEcole.getAutresDepenses());
                         break;
                     case 5:
                         System.out.println("Retour au menu principal.");
@@ -404,9 +410,7 @@ public class Main {
                 String adresse = infosEleve[3];
                 String tel = infosEleve[4];
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                String auj = LocalDate.now().format(formatter);
-                LocalDate dateAuj = LocalDate.parse(auj, formatter);
+                LocalDate dateAuj = LocalDate.now();
 
                 autoEcole.ajouterEleve(new Eleve(numSAAQ, nom, prenom, adresse, tel, dateAuj));
                 System.out.println("Élève ajouté dans le système.");
@@ -461,7 +465,12 @@ public class Main {
                     continue;
                 }
 
-                // *** Tester conflit d'horaire
+                ArrayList<PlageHoraire> horaires = new ArrayList<>();
+                for (Activite activite : autoEcole.getActivites()) horaires.add(activite.getPlageHoraire());
+                if (horaire.estEnConflitHoraire(horaires)) {
+                    System.out.println("Conflit d'horaire à " + horaire + ". Réessaie");
+                    continue;
+                }
 
                 autoEcole.ajouterActivite(new Activite(horaire, eleve, voiture, type, statut));
                 System.out.println("Activité ajoutée dans le système.");
@@ -1039,11 +1048,12 @@ public class Main {
                 StatutPaiement statutPaiement = StatutPaiement.valueOf(etat);
 
                 if (statutPaiement.equals(StatutPaiement.P)) {
-
+                    paiement.setMontantRestant(0);
                 } else if (statutPaiement.equals(StatutPaiement.PP)) {
                     montantPaye(paiement);
                 }
 
+                paiement.setDate(LocalDate.now());
                 paiement.setEtat(statutPaiement);
                 System.out.println("Changement effectué, le paiement est maintenant dans l'état " + statutPaiement.getLibelle());
 
@@ -1075,6 +1085,83 @@ public class Main {
             } catch (Exception e) {
                 System.out.println("Erreur: le montant restant doit être un nombre à virgule (double).");
             }
+        }
+    }
+
+
+    // Création
+    public void genererFacture() {
+        while(true) {
+            System.out.println("Générer une facture pour un paiement.");
+            System.out.println("Recherche d'un paiement par son identifiant (format : F-AAAA-XXXXX)");
+            System.out.print("Identifiant de paiement: ");
+
+            try {
+                String id = scanner.nextLine();
+
+                Paiement paiement = autoEcole.rechercherPaiement(id);
+
+                if (paiement == null) {
+                    System.out.println("Aucun paiement attaché à cet identificateur.");
+                    return;
+                }
+
+                creationFacture(paiement);
+
+            } catch (Exception e) {
+                System.out.println("Erreur: il faut un numéro (long). Réessaie");
+            }
+        }
+    }
+
+    public void creationFacture(Paiement paiement) {
+        String filePath = CSV.getDir() + paiement.getId() + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".txt";
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(filePath))) {
+            Eleve eleve = paiement.getEleve();
+            Activite activite = paiement.getActivite();
+
+            pw.println("================================================");
+            pw.println("          AUTO-ÉCOLE - FACTURE");
+            pw.println("================================================");
+            pw.println("Numéro de facture: " + paiement.getId());
+            pw.println("Date de création: " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            pw.println();
+            pw.println("------------------------------------------------");
+            pw.println("ÉLÈVE");
+            pw.println("------------------------------------------------");
+            pw.println("NumSAAQ: " + eleve.getNumSAAQ());
+            pw.println("Nom: " + eleve.getNom() + ", " + eleve.getPrenom());
+            pw.println("Adresse: " + eleve.getAdresse());
+            pw.println("Téléphone: " + eleve.getTelephone());
+            pw.println();
+            pw.println("------------------------------------------------");
+            pw.println("ACTIVITÉ");
+            pw.println("------------------------------------------------");
+            pw.println("ID: " + activite.getId());
+            pw.println("Type: " + activite.getType() + " - " + activite.getType().getLibelle());
+            pw.println("Date: " + activite.getPlageHoraire().getDate());
+            pw.println("Heure: " + activite.getPlageHoraire().getHeureDebut());
+            pw.println("Durée: " + activite.getPlageHoraire().getDuree() + " minutes");
+            pw.println("Véhicule: " + activite.getVoiture().getPlaque());
+            pw.println("Statut: " + activite.getStatut().getLibelle());
+            pw.println();
+            pw.println("------------------------------------------------");
+            pw.println("PAIEMENT");
+            pw.println("------------------------------------------------");
+            pw.println("Montant total: " + paiement.getMontant());
+            pw.println("Montant restant: " + paiement.getMontantRestant());
+            pw.println("Méthode: " + paiement.getMethodePaiement().getLibelle());
+            pw.println("Statut: " + paiement.getStatutPaiement().getLibelle());
+            pw.println("Motif: " + paiement.getTypeActivite().getLibelle());
+            pw.println();
+            pw.println("================================================");
+            pw.println("Bonne journée!");
+            pw.println("================================================");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

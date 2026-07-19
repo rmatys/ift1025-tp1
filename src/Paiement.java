@@ -61,6 +61,7 @@ public class Paiement {
 
     public void setEtat(StatutPaiement statut) { this.statutPaiement = statut; }
     public void setMontantRestant(double montantRestant) { this.montantRestant = montantRestant; }
+    public void setDate(LocalDate datePaiement) { this.datePaiement = datePaiement; }
 
     public static void setPrefix(char nouveauPrefix) { prefix = nouveauPrefix; }
 

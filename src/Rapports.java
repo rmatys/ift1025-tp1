@@ -8,12 +8,12 @@ import java.util.Map;
 
 public class Rapports {
 
-    public static void genererRapportEleves(ArrayList<Eleve> eleves, String repertoire, int annee) {
-        File dir = new File(repertoire);
+    public static void genererRapportEleves(ArrayList<Eleve> eleves) {
+        File dir = new File(CSV.getDir());
         if (!dir.exists()) dir.mkdirs();
-        File f = new File(dir, "rapport_eleves_" + annee + ".txt");
+        File f = new File(dir, "rapportEleves" + CSV.YEAR + ".txt");
         try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
-            pw.println("Rapport des élèves - " + annee);
+            pw.println("Rapport des élèves - " + CSV.YEAR);
             pw.println("Nombre d'élèves : " + eleves.size());
             pw.println();
             for (Eleve e : eleves) {
@@ -24,10 +24,10 @@ public class Rapports {
         }
     }
 
-    public static void genererRapportRevenus(ArrayList<Activite> activites, ArrayList<Paiement> paiements, String repertoire, int annee) {
-        File dir = new File(repertoire);
+    public static void genererRapportRevenus(ArrayList<Activite> activites, ArrayList<Paiement> paiements) {
+        File dir = new File(CSV.getDir());
         if (!dir.exists()) dir.mkdirs();
-        File f = new File(dir, "rapport_revenus_" + annee + ".txt");
+        File f = new File(dir, "rapportRevenus" + CSV.YEAR + ".txt");
         double totalPercu = 0;
         int nombreLecons = 0;
         int nombreExamens = 0;
@@ -52,7 +52,7 @@ public class Rapports {
             }
         }
         try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
-            pw.println("Rapport des revenus - " + annee);
+            pw.println("Rapport des revenus - " + CSV.YEAR);
             pw.println("Revenus perçus (paiements) : " + String.format("%.2f", totalPercu));
             pw.println("Nombre de leçons : " + nombreLecons);
             pw.println("Nombre d'examens : " + nombreExamens);
@@ -66,15 +66,15 @@ public class Rapports {
         }
     }
 
-    public static void genererRapportDepensesVoiture(ArrayList<DepenseVoiture> depensesVoiture, String repertoire, int annee) {
-        File dir = new File(repertoire);
+    public static void genererRapportDepensesVoiture(ArrayList<DepenseVoiture> depensesVoiture) {
+        File dir = new File(CSV.getDir());
         if (!dir.exists()) dir.mkdirs();
-        File f = new File(dir, "rapport_depenses_voiture_" + annee + ".txt");
+        File f = new File(dir, "rapportDepensesVoiture" + CSV.YEAR + ".txt");
         double totalR = 0;
         double totalE = 0;
         double totalC = 0;
         try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
-            pw.println("Rapport des dépenses voiture - " + annee);
+            pw.println("Rapport des dépenses voiture - " + CSV.YEAR);
             for (DepenseVoiture d : depensesVoiture) {
                 pw.println(d.getId() + " | " + d.getPlaque() + " | " + d.getDate() + " | " + d.getCategorie() + " | " + d.getDescription() + " | " + String.format("%.2f", d.getMontant()));
                 TypeDepenseVoiture categorie = d.getCategorie();
@@ -104,11 +104,11 @@ public class Rapports {
         }
     }
 
-    public static void genererRapportAutresDepenses(ArrayList<AutreDepense> autresDepenses, String repertoire, int annee) {
-        File dir = new File(repertoire);
+    public static void genererRapportAutresDepenses(ArrayList<AutreDepense> autresDepenses) {
+        File dir = new File(CSV.getDir());
 
         if (!dir.exists()) dir.mkdirs();
-        File f = new File(dir, "rapport_autres_depenses_" + annee + ".txt");
+        File f = new File(dir, "rapportAutresDepenses" + CSV.YEAR + ".txt");
         Map<TypeAutreDepense, Double> totals = new HashMap<>();
         totals.put(TypeAutreDepense.P, 0.0);
         totals.put(TypeAutreDepense.B, 0.0);
@@ -117,7 +117,7 @@ public class Rapports {
         totals.put(TypeAutreDepense.A, 0.0);
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
-            pw.println("Rapport des autres dépenses - " + annee);
+            pw.println("Rapport des autres dépenses - " + CSV.YEAR);
             for (AutreDepense d : autresDepenses) {
                 pw.println(d.getId() + " | " + d.getDate() + " | " + d.getCategorie() + " | " + d.getDescription() + " | " + String.format("%.2f", d.getMontant()));
                 TypeAutreDepense categorie = d.getCategorie();
@@ -148,13 +148,11 @@ public class Rapports {
                                               ArrayList<Activite> activites,
                                               ArrayList<Paiement> paiements,
                                               ArrayList<DepenseVoiture> depensesVoiture,
-                                              ArrayList<AutreDepense> autresDepenses,
-                                              String repertoire,
-                                              int annee) {
+                                              ArrayList<AutreDepense> autresDepenses) {
                                                 
-        genererRapportEleves(eleves, repertoire, annee);
-        genererRapportRevenus(activites, paiements, repertoire, annee);
-        genererRapportDepensesVoiture(depensesVoiture, repertoire, annee);
-        genererRapportAutresDepenses(autresDepenses, repertoire, annee);
+        genererRapportEleves(eleves);
+        genererRapportRevenus(activites, paiements);
+        genererRapportDepensesVoiture(depensesVoiture);
+        genererRapportAutresDepenses(autresDepenses);
     }
 }

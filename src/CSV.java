@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class CSV {
-    private static final int YEAR = LocalDate.now().getYear();
+    public static final int YEAR = LocalDate.now().getYear();
 
     // Élèves
     public static ArrayList<Eleve> lireEleves() {
@@ -24,8 +24,8 @@ public class CSV {
                 String prenom = infosEleve[2];
                 String adresse = infosEleve[3];
                 String tel = infosEleve[4];
-                LocalDate dateDebut = LocalDate.parse(infosEleve[5]);
-                LocalDate dateFin = LocalDate.parse(infosEleve[6]);
+                LocalDate dateDebut = LocalDate.parse(infosEleve[5], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                LocalDate dateFin = LocalDate.parse(infosEleve[6], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
                 eleves.add(new Eleve(numSaaq, nom, prenom, adresse, tel, dateDebut, dateFin));
             }
@@ -362,7 +362,7 @@ public class CSV {
         return temp;
     }
 
-    private static String getDir() {
+    public static String getDir() {
         return System.getProperty("user.dir") + "\\data\\";
     }
 }

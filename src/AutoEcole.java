@@ -165,24 +165,6 @@ public class AutoEcole {
     }
 
 
-    // Rapports
-    
-    public void genererRapportEleves() {
-        Rapports.genererRapportEleves(eleves, "Rapports", 2026);
-    }
-    public void genererRapportRevenus() {
-        Rapports.genererRapportRevenus(activites, paiements, "Rapports", 2026);
-    }
-
-    public void genererRapportDepensesVoiture() {
-        Rapports.genererRapportDepensesVoiture(depensesVoiture, "Rapports", 2026);
-    }
-
-    public void genererRapportAutresDepenses() {
-        Rapports.genererRapportAutresDepenses(autresDepenses, "Rapports", 2026);
-    }
-
-
     // Méthodes utilitaires
 
     public double calculerRevenus() {
