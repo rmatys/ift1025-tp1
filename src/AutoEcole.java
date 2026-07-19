@@ -23,10 +23,12 @@ public class AutoEcole {
 
     public void ajouterEleve(Eleve eleve) {
         eleves.add(eleve);
+        sauvegarderEleves();
     }
 
     public void supprimerEleve(long numSAAQ) {
         eleves.removeIf(eleve -> eleve.getNumSAAQ() == numSAAQ);
+        sauvegarderEleves();
     }
 
     public Eleve rechercherEleve(long numSAAQ) {
@@ -42,11 +44,13 @@ public class AutoEcole {
     // Méthodes de gestion des activités
 
     public void ajouterActivite(Activite activite) {
-    activites.add(activite);
+        activites.add(activite);
+        sauvegarderActivites();
     }
 
     public void annulerActivite(int id) {
         activites.removeIf(activite -> activite.getId() == id);
+        sauvegarderActivites();
     }
 
     public Activite rechercherActivite(int id) {
@@ -68,12 +72,24 @@ public class AutoEcole {
                 activite.getEleve().setDateFin(LocalDate.now());
             }
         }
+        sauvegarderActivites();
+    }
+
+    public int prochainIdActivite() {
+        int max = 0;
+        for (Activite activite : activites) {
+            max = Math.max(activite.getId(), max);
+        }
+        return max + 1;
     }
 
 
     // Méthodes de gestion des paiements
 
-    public void ajouterPaiement(Paiement paiement) { paiements.add(paiement); }
+    public void ajouterPaiement(Paiement paiement) {
+        paiements.add(paiement);
+        sauvegarderPaiements();
+    }
 
     public Paiement rechercherPaiement(String id) {
         for (Paiement paiement : paiements) {
@@ -87,7 +103,10 @@ public class AutoEcole {
 
     // Méthodes de gestion des voitures
 
-    public void ajouterVoiture(Voiture voiture) { voitures.add(voiture); }
+    public void ajouterVoiture(Voiture voiture) {
+        voitures.add(voiture);
+        sauvegarderVoitures();
+    }
 
     public Voiture rechercherVoiture(String plaque) {
         for (Voiture voiture : voitures) {
@@ -101,8 +120,14 @@ public class AutoEcole {
 
     // Méthodes de gestion des dépenses
 
-    public void ajouterDepenseVoiture(DepenseVoiture depense) { depensesVoiture.add(depense); }
-    public void ajouterAutreDepense(AutreDepense depense) { autresDepenses.add(depense); }
+    public void ajouterDepenseVoiture(DepenseVoiture depense) {
+        depensesVoiture.add(depense);
+        sauvegarderDepensesVoiture();
+    }
+    public void ajouterAutreDepense(AutreDepense depense) {
+        autresDepenses.add(depense);
+        sauvegarderAutresDepenses();
+    }
 
     public ArrayList<DepenseVoiture> trouverDepensesVoitureSelonPlaque(String plaque) {
         ArrayList<DepenseVoiture> depensesVoiturePlaque = new ArrayList<>();
@@ -112,6 +137,22 @@ public class AutoEcole {
         }
 
         return depensesVoiturePlaque;
+    }
+
+    public int prochainIdDepenseVoiture() {
+        int max = 0;
+        for (DepenseVoiture depense : depensesVoiture) {
+            max = Math.max(depense.getId(), max);
+        }
+        return max + 1;
+    }
+
+    public int prochainIdAutreDepense() {
+        int max = 0;
+        for (AutreDepense depense : autresDepenses) {
+            max = Math.max(depense.getId(), max);
+        }
+        return max + 1;
     }
 
 

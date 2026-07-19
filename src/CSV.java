@@ -70,7 +70,7 @@ public class CSV {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
-                String[] t = ligne.split(",");
+                String[] t = ligne.split(",", -1);
                 for (int i=0; i<bonneLongueur; i++) {
                     t[i] = t[i].trim();
                 }
@@ -106,6 +106,8 @@ public class CSV {
             pw.println("ID_Activite,Type,NumSAAQ,Date,Heure,Duree,Montant,Statut,Plaque");
 
             for (Activite activite : activites) {
+                String plaque = (activite.getVoiture() != null) ? activite.getVoiture().getPlaque() : "";
+
                 pw.println(activite.getId() + "," +
                         activite.getType() + "," +
                         activite.getEleve().getNumSAAQ() + "," +
@@ -114,7 +116,7 @@ public class CSV {
                         activite.getPlageHoraire().getDuree() + "," +
                         activite.getMontant() + "," +
                         activite.getStatut() + "," +
-                        activite.getVoiture().getPlaque());
+                        plaque);
             }
 
         } catch (Exception e) {
@@ -131,7 +133,7 @@ public class CSV {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
-                String[] t = ligne.split(",");
+                String[] t = ligne.split(",", -1);
                 for (int i=0; i<bonneLongueur; i++) {
                     t[i] = t[i].trim();
                 }
@@ -201,7 +203,7 @@ public class CSV {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
-                String[] t = ligne.split(",");
+                String[] t = ligne.split(",", -1);
                 for (int i=0; i<bonneLongueur; i++) {
                     t[i] = t[i].trim();
                 }
@@ -256,7 +258,7 @@ public class CSV {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
-                String[] t = ligne.split(",");
+                String[] t = ligne.split(",", -1);
                 for (int i=0; i<bonneLongueur; i++) {
                     t[i] = t[i].trim();
                 }
@@ -310,7 +312,7 @@ public class CSV {
             String ligne = br.readLine(); // skip header
 
             while ((ligne = br.readLine()) != null) {
-                String[] t = ligne.split(",");
+                String[] t = ligne.split(",", -1);
                 for (int i=0; i<bonneLongueur; i++) {
                     t[i] = t[i].trim();
                 }

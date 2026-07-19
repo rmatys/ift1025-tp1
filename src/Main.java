@@ -469,9 +469,13 @@ public class Main {
                 if (horaire.estEnConflitHoraire(horaires)) {
                     System.out.println("Conflit d'horaire à " + horaire + ". Réessaie");
                     continue;
+                } else if (voiture != null && !voiture.estDisponible()) {
+                    System.out.println("La voiture de l'école n'est pas disponible. Réessaie");
+                    continue;
                 }
 
-                autoEcole.ajouterActivite(new Activite(horaire, eleve, voiture, type, statut));
+                int prochainId = autoEcole.prochainIdActivite();
+                autoEcole.ajouterActivite(new Activite(prochainId, horaire, eleve, voiture, type, statut));
                 System.out.println("Activité ajoutée dans le système.");
 
                 break;
@@ -502,6 +506,8 @@ public class Main {
 
                 creationPaiement(activite);
                 System.out.println("Paiement ajouté dans le système pour l'activité ID: " + id);
+
+                break;
 
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (int). Réessaie");
@@ -543,7 +549,8 @@ public class Main {
                     continue;
                 }
 
-                autoEcole.ajouterDepenseVoiture(new DepenseVoiture(plaque, date, categorie, description, montant));
+                int prochainId = autoEcole.prochainIdDepenseVoiture();
+                autoEcole.ajouterDepenseVoiture(new DepenseVoiture(prochainId, plaque, date, categorie, description, montant));
                 System.out.println("Dépense ajoutée dans le système");
 
                 Voiture voiture = autoEcole.rechercherVoiture(plaque);
@@ -595,7 +602,8 @@ public class Main {
                     continue;
                 }
 
-                autoEcole.ajouterAutreDepense(new AutreDepense(date, categorie, description, montant));
+                int prochainId = autoEcole.prochainIdAutreDepense();
+                autoEcole.ajouterAutreDepense(new AutreDepense(prochainId, date, categorie, description, montant));
                 System.out.println("Autre dépense ajouté dans le système.");
 
                 break;
@@ -646,7 +654,7 @@ public class Main {
 
                 ArrayList<DepenseVoiture> depenses = autoEcole.trouverDepensesVoitureSelonPlaque(plaque);
 
-                autoEcole.ajouterVoiture(new Voiture(marque, plaque, annee, prix, kmAchat, etat, km, depenses));
+                autoEcole.ajouterVoiture(new Voiture(plaque, marque, annee, prix, kmAchat, etat, km, depenses));
                 System.out.println("Voiture ajoutée dans le système.");
 
                 break;
@@ -679,6 +687,7 @@ public class Main {
                  }
 
                  System.out.println(" - " + eleve);
+                 break;
 
              } catch (Exception e) {
                  System.out.println("Erreur: il faut un numéro (long). Réessaie");
@@ -704,6 +713,8 @@ public class Main {
 
                 System.out.println(" - " + activite);
 
+                break;
+
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (int). Réessaie");
             }
@@ -726,6 +737,7 @@ public class Main {
                 }
 
                 System.out.println(" - " + paiement);
+                break;
 
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un identifiant (String format \"F-AAAA-XXXXX\"). Réessaie");
@@ -749,6 +761,7 @@ public class Main {
                 }
 
                 System.out.println(" - " + voiture);
+                break;
 
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
@@ -779,6 +792,8 @@ public class Main {
                 System.out.println(" - " + eleve);
                 System.out.println("L'élève à été supprimé");
 
+                break;
+
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
             }
@@ -804,6 +819,8 @@ public class Main {
                 autoEcole.annulerActivite(id);
                 System.out.println(" - " + activite);
                 System.out.println("L'activité à été annulé");
+
+                break;
 
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (int). Réessaie");
@@ -861,6 +878,8 @@ public class Main {
                 }
                 if (count == 0) System.out.println("Aucune activité associé à l'élève");
 
+                break;
+
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
             }
@@ -897,6 +916,8 @@ public class Main {
                 ArrayList<DepenseVoiture> depenses = voiture.getDepensesVoiture();
                 for (DepenseVoiture depense : depenses) { System.out.println(" - " + depense); }
                 if (depenses.isEmpty()) System.out.println("Aucune dépense associé à la voiture");
+
+                break;
 
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
@@ -935,6 +956,8 @@ public class Main {
                 ArrayList<Paiement> paiements = autoEcole.getPaiements();
                 for (Paiement paiement : paiements) { System.out.println(" - " + paiement); }
                 if (paiements.isEmpty()) System.out.println("Aucun paiement associé à cet élève.");
+
+                break;
 
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
@@ -979,6 +1002,8 @@ public class Main {
                 System.out.println(" - " + activite);
                 System.out.println("L'activité à été marqué comme complété");
 
+                break;
+
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (int). Réessaie");
             }
@@ -1004,6 +1029,8 @@ public class Main {
                 System.out.println(" - " + voiture);
                 subChangerEtatVoiture(voiture);
 
+                break;
+
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
             }
@@ -1021,6 +1048,7 @@ public class Main {
                 StatutVoiture statutVoiture = StatutVoiture.valueOf(etat);
 
                 voiture.setEtat(statutVoiture);
+                autoEcole.sauvegarderVoitures();
                 System.out.println("Changement effectué, la voiture est maintenant dans l'état " + statutVoiture.getLibelle());
 
                 break;
@@ -1050,6 +1078,8 @@ public class Main {
                 System.out.println(" - " + paiement);
                 subChangerEtatPaiement(paiement);
 
+                break;
+
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
             }
@@ -1074,6 +1104,7 @@ public class Main {
 
                 paiement.setDate(LocalDate.now());
                 paiement.setEtat(statutPaiement);
+                autoEcole.sauvegarderPaiements();
                 System.out.println("Changement effectué, le paiement est maintenant dans l'état " + statutPaiement.getLibelle());
 
                 break;
@@ -1101,6 +1132,7 @@ public class Main {
                 paiement.setMontantRestant(montantRestant);
 
                 break;
+
             } catch (Exception e) {
                 System.out.println("Erreur: le montant restant doit être un nombre à virgule (double).");
             }
@@ -1126,6 +1158,8 @@ public class Main {
                 }
 
                 creationFacture(paiement);
+
+                break;
 
             } catch (Exception e) {
                 System.out.println("Erreur: il faut un numéro (long). Réessaie");
@@ -1262,14 +1296,14 @@ public class Main {
      * @param activite
      */
     private void creationPaiement(Activite activite) {
-        int bonneLongueur = 4;
+        int bonneLongueur = 3;
 
         while (true) {
             System.out.println("Ajout d'une paiement pour l'activité avec l'ID " + activite.getId());
             System.out.println(" - " + activite);
             System.out.println("Donner les informations sous ce format:");
             System.out.println("Date,StatutPaiement,MethodePaiement");
-            System.out.println("ex: 123456789,12-04-2026,P,E");
+            System.out.println("ex: 12-04-2026,P,E");
             System.out.print("Votre entrée: ");
             String ligne = scanner.nextLine();
 

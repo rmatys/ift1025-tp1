@@ -23,7 +23,7 @@ public class Paiement {
         annee = LocalDate.now().getYear();
         numeroSequentiel++;
 
-        this.idPaiement = prefix + "-" + annee + "-" + numeroSequentiel;
+        this.idPaiement = prefix + "-" + annee + "-" + String.format("%05d", numeroSequentiel);
         this.montant = activite.getMontant();
         this.datePaiement = datePaiement;
         this.statutPaiement = statutPaiement;

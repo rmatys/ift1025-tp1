@@ -36,11 +36,7 @@ public class Voiture {
         this.depensesVoiture = depensesVoiture;
     }
 
-    // faire attention voiture est disponible s'il n'y a pas de conflit d'horaire
-    // conflit d'horaire se base plus sur le moniteur
     public boolean estDisponible() { return this.statutVoiture == StatutVoiture.D; }
-    public boolean estDeLEcole() { return this.plaqueImmatriculation != null; }
-
 
     public void updateDepenses(ArrayList<DepenseVoiture> depenses) {
         this.depensesVoiture.clear();
