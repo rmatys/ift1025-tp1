@@ -143,16 +143,4 @@ public class Rapports {
             ex.printStackTrace();
         }
     }
-
-    public static void genererTousLesRapports(ArrayList<Eleve> eleves,
-                                              ArrayList<Activite> activites,
-                                              ArrayList<Paiement> paiements,
-                                              ArrayList<DepenseVoiture> depensesVoiture,
-                                              ArrayList<AutreDepense> autresDepenses) {
-                                                
-        genererRapportEleves(eleves);
-        genererRapportRevenus(activites, paiements);
-        genererRapportDepensesVoiture(depensesVoiture);
-        genererRapportAutresDepenses(autresDepenses);
-    }
 }

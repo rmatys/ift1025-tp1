@@ -1,6 +1,4 @@
-import java.lang.reflect.Type;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AutoEcole {
@@ -38,14 +36,6 @@ public class AutoEcole {
             }
         }
         return null;
-    }
-
-    public void modifierEleve(Eleve updated) {
-        for (int i = 0; i < eleves.size(); i++) {
-            if (eleves.get(i).equals(updated)) {
-                eleves.set(i, updated);
-            }
-        }
     }
 
 
@@ -94,16 +84,6 @@ public class AutoEcole {
         return null;
     }
 
-    public ArrayList<Paiement> paiementsEleve(Eleve eleve) {
-        ArrayList<Paiement> res = new ArrayList<>();
-        for (Paiement paiement : paiements) {
-            if (paiement.getEleve().equals(eleve)) {
-                res.add(paiement);
-            }
-        }
-        return res;
-    }
-
 
     // Méthodes de gestion des voitures
 
@@ -116,13 +96,6 @@ public class AutoEcole {
             }
         }
         return null;
-    }
-
-    public void changerEtatVoiture(String plaque, StatutVoiture etat) {
-        Voiture voiture = rechercherVoiture(plaque);
-        if (voiture != null) {
-            voiture.setEtat(etat);
-        }
     }
 
 
@@ -190,11 +163,6 @@ public class AutoEcole {
         }
         return total;
     }
-
-    public double benefice() { return calculerRevenus() - calculerDepenses(); }
-    public int nombreElevesActifs() { return eleves.size(); }
-    public int nombreActivites() { return activites.size(); }
-    public int nombrePaiements() { return paiements.size(); }
 
     public ArrayList<Eleve> getEleves() { return eleves; }
     public ArrayList<Activite> getActivites() { return activites; }

@@ -73,7 +73,6 @@ public class CSV {
                 String date = t[3];
                 String heure = t[4];
                 int duree = Integer.parseInt(t[5]);
-                double montant = Double.parseDouble(t[6]); // je peux juste le recalculer puisque le montant d'une activité suit le tableau dans les instructions
                 String statut = t[7];
                 String plaque = t[8];
 
@@ -134,7 +133,6 @@ public class CSV {
                 LocalDate date = LocalDate.parse(t[5], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
                 StatutPaiement statut = StatutPaiement.valueOf(t[6]);
                 MethodePaiement methode = MethodePaiement.valueOf(t[7]);
-                TypeActivite motif = TypeActivite.valueOf(t[8]);
 
                 Activite activite = null;
                 for (Activite a : activites) {
