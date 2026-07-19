@@ -16,7 +16,7 @@ public class PlageHoraire {
 
     public PlageHoraire(String date, String heureDebut, int duree) {
         this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        this.heureDebut = LocalTime.parse(heureDebut, DateTimeFormatter.ofPattern("HH:mm"));
+        this.heureDebut = LocalTime.parse(heureDebut, DateTimeFormatter.ofPattern("H:mm"));
         this.duree = duree;
     }
 

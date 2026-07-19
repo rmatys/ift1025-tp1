@@ -46,10 +46,10 @@ public class Eleve {
     public LocalDate getDateDebut() {
         return this.dateDebut;
     }
-
     public LocalDate getDateFin() {
         return this.dateFin;
     }
+
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
     }

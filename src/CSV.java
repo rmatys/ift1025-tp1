@@ -11,13 +11,17 @@ public class CSV {
 
     // Élèves
     public static ArrayList<Eleve> lireEleves() {
+        int bonneLongueur = 7;
         ArrayList<Eleve> eleves = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "eleves" + YEAR + ".csv"))) {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
-                String[] infosEleve = ligne.split(",");
+                String[] infosEleve = ligne.split(",", -1);
+                for (int i=0; i<bonneLongueur; i++) {
+                    infosEleve[i] = infosEleve[i].trim();
+                }
 
                 Long numSaaq = Long.parseLong(infosEleve[0]);
                 String nom = infosEleve[1];
@@ -25,7 +29,8 @@ public class CSV {
                 String adresse = infosEleve[3];
                 String tel = infosEleve[4];
                 LocalDate dateDebut = LocalDate.parse(infosEleve[5], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                LocalDate dateFin = LocalDate.parse(infosEleve[6], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                LocalDate dateFin = null;
+                if (!infosEleve[6].isBlank()) dateFin = LocalDate.parse(infosEleve[6], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
                 eleves.add(new Eleve(numSaaq, nom, prenom, adresse, tel, dateDebut, dateFin));
             }
@@ -47,8 +52,8 @@ public class CSV {
                            e.getPrenom() + "," +
                            e.getAdresse() + "," +
                            e.getTelephone() + "," +
-                           e.getDateDebut() + "," +
-                           e.getDateFin());
+                           e.getDateDebut().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "," +
+                           (e.getDateFin() == null ? "" : e.getDateFin().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
             }
 
         } catch (Exception e) {
@@ -58,7 +63,7 @@ public class CSV {
 
     // Activités
     public static ArrayList<Activite> lireActivites(ArrayList<Eleve> eleves, ArrayList<Voiture> voitures) {
-
+        int bonneLongueur = 9;
         ArrayList<Activite> activites = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "activites" + YEAR + ".csv"))) {
@@ -66,6 +71,9 @@ public class CSV {
 
             while ((ligne = br.readLine()) != null) {
                 String[] t = ligne.split(",");
+                for (int i=0; i<bonneLongueur; i++) {
+                    t[i] = t[i].trim();
+                }
 
                 int idActivite = Integer.parseInt(t[0]);
                 String type = t[1];
@@ -101,8 +109,8 @@ public class CSV {
                 pw.println(activite.getId() + "," +
                         activite.getType() + "," +
                         activite.getEleve().getNumSAAQ() + "," +
-                        activite.getPlageHoraire().getDate() + "," +
-                        activite.getPlageHoraire().getHeureDebut() + "," +
+                        activite.getPlageHoraire().getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "," +
+                        activite.getPlageHoraire().getHeureDebut().format(DateTimeFormatter.ofPattern("H:mm")) + "," +
                         activite.getPlageHoraire().getDuree() + "," +
                         activite.getMontant() + "," +
                         activite.getStatut() + "," +
@@ -116,6 +124,7 @@ public class CSV {
 
     // Paiements
     public static ArrayList<Paiement> lirePaiements(ArrayList<Activite> activites, ArrayList<Eleve> eleves) {
+        int bonneLongueur = 8;
         ArrayList<Paiement> paiements = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "paiements" + YEAR + ".csv"))) {
@@ -123,7 +132,9 @@ public class CSV {
 
             while ((ligne = br.readLine()) != null) {
                 String[] t = ligne.split(",");
-
+                for (int i=0; i<bonneLongueur; i++) {
+                    t[i] = t[i].trim();
+                }
 
                 String idPaiement = t[0];
                 int idActivite = Integer.parseInt(t[1]);
@@ -170,7 +181,7 @@ public class CSV {
                         paiement.getEleve().getNumSAAQ() + "," +
                         paiement.getMontant() + "," +
                         paiement.getMontantRestant() + "," +
-                        paiement.getDate() + "," +
+                        paiement.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "," +
                         paiement.getStatutPaiement() + "," +
                         paiement.getMethodePaiement() + "," +
                         paiement.getTypeActivite());
@@ -183,6 +194,7 @@ public class CSV {
 
     // Voitures
     public static ArrayList<Voiture> lireVoitures(ArrayList<DepenseVoiture> depensesVoiture) {
+        int bonneLongueur = 7;
         ArrayList<Voiture> voitures = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "voitures" + YEAR + ".csv"))) {
@@ -190,6 +202,9 @@ public class CSV {
 
             while ((ligne = br.readLine()) != null) {
                 String[] t = ligne.split(",");
+                for (int i=0; i<bonneLongueur; i++) {
+                    t[i] = t[i].trim();
+                }
 
                 String marque = t[0];
                 String plaque = t[1];
@@ -213,7 +228,6 @@ public class CSV {
     }
 
     public static void ecrireVoitures(ArrayList<Voiture> voitures) {
-
         try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "voitures" + YEAR + ".csv"))) {
 
             pw.println("Marque,Plaque,Annee,Prix,KmAchat,Etat,Km");
@@ -235,7 +249,7 @@ public class CSV {
 
     // Dépenses voiture
     public static ArrayList<DepenseVoiture> lireDepensesVoiture() {
-
+        int bonneLongueur = 6;
         ArrayList<DepenseVoiture> depenses = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "depenses_voiture" + YEAR + ".csv"))) {
@@ -243,6 +257,9 @@ public class CSV {
 
             while ((ligne = br.readLine()) != null) {
                 String[] t = ligne.split(",");
+                for (int i=0; i<bonneLongueur; i++) {
+                    t[i] = t[i].trim();
+                }
 
                 int id = Integer.parseInt(t[0]);
                 String plaque = t[1];
@@ -273,7 +290,7 @@ public class CSV {
             for (DepenseVoiture d : depenses) {
                 pw.println(d.getId() + "," +
                            d.getPlaque() + "," +
-                           d.getDate() + "," +
+                           d.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "," +
                            d.getCategorie() + "," +
                            d.getDescription() + "," +
                            d.getMontant());
@@ -286,6 +303,7 @@ public class CSV {
 
     // Autres dépenses
     public static ArrayList<AutreDepense> lireAutresDepenses() {
+        int bonneLongueur = 5;
         ArrayList<AutreDepense> depenses = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "autres_depenses" + YEAR + ".csv"))) {
@@ -293,6 +311,9 @@ public class CSV {
 
             while ((ligne = br.readLine()) != null) {
                 String[] t = ligne.split(",");
+                for (int i=0; i<bonneLongueur; i++) {
+                    t[i] = t[i].trim();
+                }
 
                 int id = Integer.parseInt(t[0]);
                 String date = t[1];
@@ -321,7 +342,7 @@ public class CSV {
 
             for (AutreDepense d : depenses) {
                 pw.println(d.getId() + "," +
-                           d.getDate() + "," +
+                           d.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "," +
                            d.getCategorie() + "," +
                            d.getDescription() + "," +
                            d.getMontant());

@@ -33,12 +33,11 @@ public class Main {
             System.out.println("============================================");
             System.out.println("1. Gestion des élèves");
             System.out.println("2. Gestion des activités");
-            System.out.println("3. Gestion des paiements");
+            System.out.println("3. Gestion des finances");
             System.out.println("4. Gestion des véhicules");
-            System.out.println("5. Autres dépenses");
-            System.out.println("6. Génération de rapports");
-            System.out.println("7. Aide pour les types de valeurs");
-            System.out.println("8. Quitter");
+            System.out.println("5. Génération de rapports");
+            System.out.println("6. Aide pour les types de valeurs");
+            System.out.println("7. Quitter");
             System.out.println("============================================");
             System.out.print("Votre choix: ");
 
@@ -451,7 +450,7 @@ public class Main {
                 TypeActivite type = TypeActivite.valueOf(infosActivite[0]);
                 long numSAAQ = Long.parseLong(infosActivite[1]);
                 LocalDate date = LocalDate.parse(infosActivite[2], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-                LocalTime heure = LocalTime.parse(infosActivite[3], DateTimeFormatter.ofPattern("HH:mm"));
+                LocalTime heure = LocalTime.parse(infosActivite[3], DateTimeFormatter.ofPattern("H:mm"));
                 int duree = Integer.parseInt(infosActivite[4]);
                 StatutActivite statut = StatutActivite.valueOf(infosActivite[5]);
                 String plaque = infosActivite[6];
@@ -816,13 +815,23 @@ public class Main {
     // Afficher
 
     public void afficherEleves() {
+        int count = 0;
         System.out.println("Liste de tous les élèves de l'école: ");
-        for (Eleve eleve : autoEcole.getEleves()) System.out.println(" - " + eleve);
+        for (Eleve eleve : autoEcole.getEleves()) {
+            System.out.println(" - " + eleve);
+            count++;
+        }
+        if (count == 0) System.out.println("Aucun élève dans le système.");
     }
 
     public void afficherActivites() {
+        int count = 0;
         System.out.println("Liste de toutes les activités: ");
-        for (Activite activite : autoEcole.getActivites()) System.out.println(" - " + activite);
+        for (Activite activite : autoEcole.getActivites()) {
+            System.out.println(" - " + activite);
+            count++;
+        }
+        if (count == 0) System.out.println("Aucune activité dans le système.");
     }
 
     public void afficherActivitesEleve() {
@@ -859,8 +868,13 @@ public class Main {
     }
 
     public void afficherDepensesVoitures() {
+        int count = 0;
         System.out.println("Liste de toutes les dépenses pour les voitures: ");
-        for (DepenseVoiture depense : autoEcole.getDepensesVoiture()) System.out.println(" - " + depense);
+        for (DepenseVoiture depense : autoEcole.getDepensesVoiture()) {
+            System.out.println(" - " + depense);
+            count++;
+        }
+        if (count == 0) System.out.println("Aucune dépense de voiture dans le système.");
     }
 
     public void afficherDepensesVoiture() {
@@ -891,8 +905,13 @@ public class Main {
     }
 
     public void afficherVoitures() {
+        int count = 0;
         System.out.println("Liste de toutes les voitures: ");
-        for (Voiture voiture : autoEcole.getVoitures()) System.out.println(" - " + voiture);
+        for (Voiture voiture : autoEcole.getVoitures()) {
+            System.out.println(" - " + voiture);
+            count++;
+        }
+        if (count == 0) System.out.println("Aucune voiture dans le système.");
     }
 
     public void afficherPaiementsEleve() {

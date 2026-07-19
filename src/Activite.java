@@ -56,12 +56,13 @@ public class Activite {
 
     @Override
     public String toString() {
+        String plaque = (voiture == null) ? "" : voiture.getPlaque();
         return "Activité{id=" + idActivite +
                 ", date=" + horaire.getDate() +
                 ", heure=" + horaire.getHeureDebut() +
                 ", durée=" + horaire.getDuree() +
                 ", numSaaqEleve=" + eleve.getNumSAAQ() +
-                ", plaque=" + voiture.getPlaque() +
+                ", plaque=" + plaque +
                 ", type=" + typeActivite.getLibelle() +
                 ", statut=" + statutActivite.getLibelle() +
                 "}";
