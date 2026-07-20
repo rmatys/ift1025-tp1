@@ -100,6 +100,16 @@ public class AutoEcole {
         return null;
     }
 
+    public int prochainNumeroPaiement() {
+        int max = 0;
+        int id;
+        for (Paiement paiement : paiements) {
+            id = Integer.parseInt(paiement.getId().substring(7));
+            max = Math.max(id, max);
+        }
+        return max + 1;
+    }
+
 
     // Méthodes de gestion des voitures
 
@@ -161,7 +171,7 @@ public class AutoEcole {
     public void chargerEleves() { eleves = CSV.lireEleves(); }
     public void chargerVoitures() { voitures = CSV.lireVoitures(depensesVoiture); }
     public void chargerPaiements() { paiements = CSV.lirePaiements(activites, eleves); }
-    public void chargerActivites() { activites = CSV.lireActivites(eleves,voitures); }
+    public void chargerActivites() { activites = CSV.lireActivites(eleves); }
     public void chargerDepenses() {
         depensesVoiture = CSV.lireDepensesVoiture();
         autresDepenses = CSV.lireAutresDepenses();
@@ -179,31 +189,7 @@ public class AutoEcole {
     }
 
 
-    // Méthodes utilitaires
-
-    public double calculerRevenus() {
-        double total = 0;
-        for (Activite activite : activites) {
-            total += activite.getMontant();
-        }
-        
-        for (Paiement paiement : paiements) {
-            total += paiement.getMontant();
-        }
-        return total;
-    }
-
-    public double calculerDepenses() {
-        double total = 0;
-        for (DepenseVoiture depense : depensesVoiture) {
-            total += depense.getMontant();
-        }
-    
-        for (AutreDepense depense : autresDepenses) {
-            total += depense.getMontant();
-        }
-        return total;
-    }
+    // Méthodes access
 
     public ArrayList<Eleve> getEleves() { return eleves; }
     public ArrayList<Activite> getActivites() { return activites; }

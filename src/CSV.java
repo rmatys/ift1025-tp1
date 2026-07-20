@@ -14,7 +14,7 @@ public class CSV {
         int bonneLongueur = 7;
         ArrayList<Eleve> eleves = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "eleves" + YEAR + ".csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(getDir("data") + "eleves" + YEAR + ".csv"))) {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
@@ -23,7 +23,7 @@ public class CSV {
                     infosEleve[i] = infosEleve[i].trim();
                 }
 
-                Long numSaaq = Long.parseLong(infosEleve[0]);
+                long numSaaq = Long.parseLong(infosEleve[0]);
                 String nom = infosEleve[1];
                 String prenom = infosEleve[2];
                 String adresse = infosEleve[3];
@@ -42,7 +42,7 @@ public class CSV {
     }
 
     public static void ecrireEleves(ArrayList<Eleve> eleves) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "eleves" + YEAR + ".csv"))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "eleves" + YEAR + ".csv"))) {
 
             pw.println("NumSAAQ,Nom,Prenom,Adresse,Telephone,Date,DateFin");
 
@@ -62,11 +62,11 @@ public class CSV {
     }
 
     // Activités
-    public static ArrayList<Activite> lireActivites(ArrayList<Eleve> eleves, ArrayList<Voiture> voitures) {
+    public static ArrayList<Activite> lireActivites(ArrayList<Eleve> eleves) {
         int bonneLongueur = 9;
         ArrayList<Activite> activites = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "activites" + YEAR + ".csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(getDir("data") + "activites" + YEAR + ".csv"))) {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
@@ -86,11 +86,10 @@ public class CSV {
 
                 PlageHoraire horaire = new PlageHoraire(date, heure, duree);
                 Eleve eleve = chercherEleve(eleves, numSAAQ);
-                Voiture voiture = chercherVoiture(voitures, plaque);
                 TypeActivite typeActivite = TypeActivite.valueOf(type);
                 StatutActivite statutActivite = StatutActivite.valueOf(statut);
 
-                activites.add(new Activite(idActivite, horaire, eleve, voiture, typeActivite, statutActivite));
+                activites.add(new Activite(idActivite, horaire, eleve, plaque, typeActivite, statutActivite));
             }
 
         } catch (Exception e) {
@@ -101,13 +100,11 @@ public class CSV {
     }
 
     public static void ecrireActivites(ArrayList<Activite> activites) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "activites" + YEAR + ".csv"))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "activites" + YEAR + ".csv"))) {
 
             pw.println("ID_Activite,Type,NumSAAQ,Date,Heure,Duree,Montant,Statut,Plaque");
 
             for (Activite activite : activites) {
-                String plaque = (activite.getVoiture() != null) ? activite.getVoiture().getPlaque() : "";
-
                 pw.println(activite.getId() + "," +
                         activite.getType() + "," +
                         activite.getEleve().getNumSAAQ() + "," +
@@ -116,7 +113,7 @@ public class CSV {
                         activite.getPlageHoraire().getDuree() + "," +
                         activite.getMontant() + "," +
                         activite.getStatut() + "," +
-                        plaque);
+                        activite.getPlaque());
             }
 
         } catch (Exception e) {
@@ -129,7 +126,7 @@ public class CSV {
         int bonneLongueur = 8;
         ArrayList<Paiement> paiements = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "paiements" + YEAR + ".csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(getDir("data") + "paiements" + YEAR + ".csv"))) {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
@@ -173,7 +170,7 @@ public class CSV {
     }
 
     public static void ecrirePaiements(ArrayList<Paiement> paiements) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "paiements" + YEAR + ".csv"))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "paiements" + YEAR + ".csv"))) {
 
             pw.println("ID_Paiement,ID_Activite,NumSAAQ,Montant,MontantRestant,Date,Statut,Methode,Motif");
 
@@ -199,7 +196,7 @@ public class CSV {
         int bonneLongueur = 7;
         ArrayList<Voiture> voitures = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "voitures" + YEAR + ".csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(getDir("data") + "voitures" + YEAR + ".csv"))) {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
@@ -230,7 +227,7 @@ public class CSV {
     }
 
     public static void ecrireVoitures(ArrayList<Voiture> voitures) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "voitures" + YEAR + ".csv"))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "voitures" + YEAR + ".csv"))) {
 
             pw.println("Marque,Plaque,Annee,Prix,KmAchat,Etat,Km");
 
@@ -254,7 +251,7 @@ public class CSV {
         int bonneLongueur = 6;
         ArrayList<DepenseVoiture> depenses = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "depenses_voiture" + YEAR + ".csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(getDir("data") + "depenses_voiture" + YEAR + ".csv"))) {
             String ligne = br.readLine();
 
             while ((ligne = br.readLine()) != null) {
@@ -285,7 +282,7 @@ public class CSV {
 
     public static void ecrireDepensesVoiture(ArrayList<DepenseVoiture> depenses) {
 
-        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "depenses_voiture" + YEAR + ".csv"))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "depenses_voiture" + YEAR + ".csv"))) {
 
             pw.println("ID_Depense,Plaque,Date,Categorie,Description,Montant");
 
@@ -308,7 +305,7 @@ public class CSV {
         int bonneLongueur = 5;
         ArrayList<AutreDepense> depenses = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(getDir() + "autres_depenses" + YEAR + ".csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(getDir("data") + "autres_depenses" + YEAR + ".csv"))) {
             String ligne = br.readLine(); // skip header
 
             while ((ligne = br.readLine()) != null) {
@@ -338,7 +335,7 @@ public class CSV {
 
     public static void ecrireAutresDepenses(ArrayList<AutreDepense> depenses) {
 
-        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir() + "autres_depenses" + YEAR + ".csv"))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "autres_depenses" + YEAR + ".csv"))) {
 
             pw.println("ID_Depense,Date,Categorie,Description,Montant");
 
@@ -365,15 +362,6 @@ public class CSV {
         return null;
     }
 
-    private static Voiture chercherVoiture(ArrayList<Voiture> voitures, String plaque) {
-        for (Voiture v : voitures) {
-            if (v.getPlaque().equals(plaque)) {
-                return v;
-            }
-        }
-        return null;
-    }
-
     private static ArrayList<DepenseVoiture> filtrerParPlaque(ArrayList<DepenseVoiture> depenses, String plaque) {
         ArrayList<DepenseVoiture> temp = new ArrayList<>();
         for (DepenseVoiture depense : depenses) {
@@ -383,7 +371,7 @@ public class CSV {
         return temp;
     }
 
-    public static String getDir() {
-        return System.getProperty("user.dir") + "\\data\\";
+    public static String getDir(String folder) {
+        return System.getProperty("user.dir") + "\\" + folder + "\\";
     }
 }

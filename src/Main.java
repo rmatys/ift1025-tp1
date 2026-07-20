@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -341,7 +342,8 @@ public class Main {
             System.out.println("2. Rapport de revenus");
             System.out.println("3. Rapport des dépenses de voiture");
             System.out.println("4. Rapport des autres dépenses");
-            System.out.println("5. Retour au menu principal");
+            System.out.println("5. Générer tous les rapports");
+            System.out.println("6. Retour au menu principal");
             System.out.println("--------------------------------------------");
             System.out.print("Votre choix: ");
 
@@ -363,6 +365,12 @@ public class Main {
                         Rapports.genererRapportAutresDepenses(autoEcole.getAutresDepenses());
                         break;
                     case 5:
+                        Rapports.genererRapportEleves(autoEcole.getEleves());
+                        Rapports.genererRapportRevenus(autoEcole.getActivites(), autoEcole.getPaiements());
+                        Rapports.genererRapportDepensesVoiture(autoEcole.getDepensesVoiture());
+                        Rapports.genererRapportAutresDepenses(autoEcole.getAutresDepenses());
+                        break;
+                    case 6:
                         System.out.println("Retour au menu principal.");
                         return;
                     default:
@@ -464,6 +472,11 @@ public class Main {
                     continue;
                 }
 
+                if (statut.equals(StatutActivite.C)) {
+                    eleve.setDateFin(LocalDate.now());
+                    autoEcole.sauvegarderActivites();
+                }
+
                 ArrayList<PlageHoraire> horaires = new ArrayList<>();
                 for (Activite activite : autoEcole.getActivites()) horaires.add(activite.getPlageHoraire());
                 if (horaire.estEnConflitHoraire(horaires)) {
@@ -475,7 +488,7 @@ public class Main {
                 }
 
                 int prochainId = autoEcole.prochainIdActivite();
-                autoEcole.ajouterActivite(new Activite(prochainId, horaire, eleve, voiture, type, statut));
+                autoEcole.ajouterActivite(new Activite(prochainId, horaire, eleve, plaque, type, statut));
                 System.out.println("Activité ajoutée dans le système.");
 
                 break;
@@ -1158,6 +1171,7 @@ public class Main {
                 }
 
                 creationFacture(paiement);
+                System.out.println("Facture créé pour le paiement " + id);
 
                 break;
 
@@ -1168,7 +1182,9 @@ public class Main {
     }
 
     public void creationFacture(Paiement paiement) {
-        String filePath = CSV.getDir() + paiement.getId() + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".txt";
+        File dir = new File(CSV.getDir("facturation"));
+        if (!dir.exists()) dir.mkdirs();
+        String filePath = dir + "//" + paiement.getId() + "_" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ".txt";
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(filePath))) {
             Eleve eleve = paiement.getEleve();
@@ -1196,7 +1212,7 @@ public class Main {
             pw.println("Date: " + activite.getPlageHoraire().getDate());
             pw.println("Heure: " + activite.getPlageHoraire().getHeureDebut());
             pw.println("Durée: " + activite.getPlageHoraire().getDuree() + " minutes");
-            pw.println("Véhicule: " + activite.getVoiture().getPlaque());
+            pw.println("Véhicule: " + activite.getPlaque());
             pw.println("Statut: " + activite.getStatut().getLibelle());
             pw.println();
             pw.println("------------------------------------------------");
@@ -1324,7 +1340,8 @@ public class Main {
                 MethodePaiement methode = MethodePaiement.valueOf(infosPaiement[2]);
                 Eleve eleve = activite.getEleve();
 
-                autoEcole.ajouterPaiement(new Paiement(date, statut, activite, methode, eleve));
+                int prochainId = autoEcole.prochainNumeroPaiement();
+                autoEcole.ajouterPaiement(new Paiement(prochainId, date, statut, activite, methode, eleve));
 
                 break;
 

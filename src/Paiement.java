@@ -4,10 +4,6 @@ import java.time.LocalDate;
  * Création d'un paiement lorsque l'activité est
  */
 public class Paiement {
-    private static char prefix = 'F';
-    private static int annee;
-    private static int numeroSequentiel = -1;
-
     private final String idPaiement;
     private final double montant;
     private LocalDate datePaiement;
@@ -18,16 +14,25 @@ public class Paiement {
     private final Eleve eleve;
     private final TypeActivite typeActivite;
 
-    public Paiement(LocalDate datePaiement, StatutPaiement statutPaiement, Activite activite,
+    public Paiement(int numeroSequentiel, LocalDate datePaiement, StatutPaiement statutPaiement, Activite activite,
                     MethodePaiement methodePaiement, Eleve eleve) {
-        annee = LocalDate.now().getYear();
-        numeroSequentiel++;
+        double montant = activite.getMontant();
+        double montantRestant = -1;
+        if (statutPaiement.equals(StatutPaiement.P)) {
+            montantRestant = 0.0;
+        } else if (statutPaiement.equals(StatutPaiement.PP)) {
+            montantRestant = montant;
+        } else if (statutPaiement.equals(StatutPaiement.I)) {
+            montantRestant = montant;
+        } else {
+            System.err.println("Erreur: Stuatut du paiement manquant, valeur donnée : " + statutPaiement);
+        }
 
-        this.idPaiement = prefix + "-" + annee + "-" + String.format("%05d", numeroSequentiel);
-        this.montant = activite.getMontant();
+        this.idPaiement = "F-" + LocalDate.now().getYear() + "-" + String.format("%05d", numeroSequentiel);
+        this.montant = montant;
         this.datePaiement = datePaiement;
         this.statutPaiement = statutPaiement;
-        this.montantRestant = activite.getMontant();
+        this.montantRestant = montantRestant;
         this.activite = activite;
         this.methodePaiement = methodePaiement;
         this.eleve = eleve;

@@ -2,10 +2,10 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Eleve {
-    private String nom;
-    private String prenom;
-    private String adresse;
-    private String telephone;
+    private final String nom;
+    private final String prenom;
+    private final String adresse;
+    private final String telephone;
     private final long numSAAQ;
     private final LocalDate dateDebut;
     private LocalDate dateFin;
@@ -52,6 +52,7 @@ public class Eleve {
 
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
+        System.out.println("L'élève à terminer, il n'est plus un élève actif.");
     }
 
     @Override
