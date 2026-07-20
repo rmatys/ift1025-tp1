@@ -8,10 +8,17 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Classe principale de l'application de gestion d'une auto-école
+ */
 public class Main {
     Scanner scanner = new Scanner(System.in);
     AutoEcole autoEcole = new AutoEcole();
 
+    /**
+     * Point d'entrée de l'application
+     * @param args les arguments de la ligne de commande (non utilisés)
+     */
     void main() {
         autoEcole.chargerEleves();
         autoEcole.chargerActivites();
@@ -26,6 +33,9 @@ public class Main {
 
     // Menus
 
+    /**
+     * Affiche le menu principal de l'application et gère les choix de l'utilisateur
+     */
     public void gestionAutoEcole() {
         System.out.println("============================================");
         System.out.println("                AUTO-ÉCOLE");
@@ -78,6 +88,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche le menu de gestion des élèves et gère les choix de l'utilisateur
+     */
     public void gestionEleves() {
         System.out.println("--------------------------------------------");
         System.out.println("            GESTION DES ÉLÈVES");
@@ -124,6 +137,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche le menu de gestion des activités et gère les choix de l'utilisateur
+     */
     public void gestionActivites() {
         System.out.println("--------------------------------------------");
         System.out.println("            GESTION DES ACTIVITÉS");
@@ -178,6 +194,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche le menu de gestion financière et gère les choix de l'utilisateur
+     */
     public void gestionFinanciere() {
         System.out.println("--------------------------------------------");
         System.out.println("            GESTION FINANCIÈRE");
@@ -220,6 +239,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche le menu de gestion des paiements et gère les choix de l'utilisateur
+     */
     public void gestionPaiements() {
         System.out.println("--------------------------------------------");
         System.out.println("            GESTION DES PAIEMENTS");
@@ -274,6 +296,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche le menu de gestion des véhicules et gère les choix de l'utilisateur
+     */
     public void gestionVoiture() {
         System.out.println("--------------------------------------------");
         System.out.println("            GESTION DES VOITURES");
@@ -332,6 +357,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche le menu de gestion des rapports et gère les choix de l'utilisateur
+     */
     public void gestionRapports() {
         System.out.println("--------------------------------------------");
         System.out.println("            GESTION DES RAPPORTS");
@@ -388,6 +416,9 @@ public class Main {
 
     // Ajouts
 
+    /**
+     * Ajoute un nouvel élève à l'auto-école en demandant les informations à l'utilisateur
+     */
     public void ajoutEleve() {
         int bonneLongueur = 5;
 
@@ -432,6 +463,9 @@ public class Main {
         }
     }
 
+    /**
+     * Ajoute une nouvelle activité à l'auto-école en demandant les informations à l'utilisateur
+     */
     public void ajoutActivite() {
         int bonneLongueur = 7;
 
@@ -501,6 +535,9 @@ public class Main {
         }
     }
 
+    /**
+     * Ajoute un nouveau paiement à l'auto-école en demandant les informations à l'utilisateur
+     */
     public void ajoutPaiement() {
         while(true) {
             System.out.println("Recherche d'une activité par son ID");
@@ -528,6 +565,9 @@ public class Main {
         }
     }
 
+    /**
+     * Ajoute une nouvelle dépense pour une voiture de l'auto-école en demandant les informations à l'utilisateur
+     */
     public void ajoutDepenseVoiture() {
         int bonneLongueur = 5;
 
@@ -582,6 +622,9 @@ public class Main {
         }
     }
 
+    /**
+     * Ajoute une nouvelle dépense autre à l'auto-école en demandant les informations à l'utilisateur
+     */
     public void ajoutAutreDepense() {
         int bonneLongueur = 4;
 
@@ -629,6 +672,9 @@ public class Main {
         }
     }
 
+    /**
+     * Ajoute une nouvelle voiture à l'auto-école en demandant les informations à l'utilisateur
+     */
     public void ajoutVoiture() {
         int bonneLongueur = 7;
 
@@ -683,6 +729,9 @@ public class Main {
 
     // Recherche
 
+    /**
+     * Recherche un élève par son numéro SAAQ et affiche ses informations
+     */
     public void rechercheEleve() {
         while(true) {
             System.out.println("Recherche d'un élève par son numéro SAAQ");
@@ -708,6 +757,9 @@ public class Main {
         }
     }
 
+    /**
+     * Recherche une activité par son ID et affiche ses informations
+     */
     public void rechercheActivite() {
         while(true) {
             System.out.println("Recherche d'une activité par son ID");
@@ -734,6 +786,9 @@ public class Main {
         }
     }
 
+    /**
+     * Recherche un paiement par son ID et affiche ses informations
+     */
     public void recherchePaiement() {
         while(true) {
             System.out.println("Recherche d'un paiement par son ID (format \"F-AAAA-XXXXX\")");
@@ -758,6 +813,9 @@ public class Main {
         }
     }
 
+    /**
+     * Recherche une voiture par sa plaque d'immatriculation et affiche ses informations
+     */
     public void rechercheVoiture() {
         while(true) {
             System.out.println("Recherche d'une voiture par sa plaque d'immatriculation");
@@ -785,6 +843,9 @@ public class Main {
 
     // Supprimer
 
+    /**
+     * Supprime un élève par son numéro SAAQ
+     */
     public void supprimerEleve() {
         while(true) {
             System.out.println("Recherche d'un élève par son numéro SAAQ");
@@ -813,6 +874,9 @@ public class Main {
         }
     }
 
+    /**
+     * Supprime une activité par son ID
+     */
     public void supprimerActivite() {
         while(true) {
             System.out.println("Recherche d'une activité par son ID");
@@ -844,6 +908,9 @@ public class Main {
 
     // Afficher
 
+    /**
+     * Affiche la liste de tous les élèves de l'auto-école
+     */
     public void afficherEleves() {
         int count = 0;
         System.out.println("Liste de tous les élèves de l'école: ");
@@ -854,6 +921,9 @@ public class Main {
         if (count == 0) System.out.println("Aucun élève dans le système.");
     }
 
+    /**
+     * Affiche la liste de toutes les activités de l'auto-école
+     */
     public void afficherActivites() {
         int count = 0;
         System.out.println("Liste de toutes les activités: ");
@@ -864,6 +934,9 @@ public class Main {
         if (count == 0) System.out.println("Aucune activité dans le système.");
     }
 
+    /**
+     * Affiche la liste de toutes les activités d'un élève en recherchant l'élève par son numéro SAAQ
+     */
     public void afficherActivitesEleve() {
         while(true) {
             System.out.println("Recherche d'un élève par son numéro SAAQ");
@@ -899,6 +972,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche la liste de toutes les dépenses pour les voitures de l'auto-école
+     */
     public void afficherDepensesVoitures() {
         int count = 0;
         System.out.println("Liste de toutes les dépenses pour les voitures: ");
@@ -909,6 +985,9 @@ public class Main {
         if (count == 0) System.out.println("Aucune dépense de voiture dans le système.");
     }
 
+    /**
+     * Affiche la liste de toutes les dépenses pour une voiture spécifique en recherchant la voiture par sa plaque d'immatriculation
+     */
     public void afficherDepensesVoiture() {
         while(true) {
             System.out.println("Recherche d'une voiture par sa plaque d'immatriculation");
@@ -938,6 +1017,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche la liste de toutes les voitures de l'auto-école
+     */
     public void afficherVoitures() {
         int count = 0;
         System.out.println("Liste de toutes les voitures: ");
@@ -948,6 +1030,9 @@ public class Main {
         if (count == 0) System.out.println("Aucune voiture dans le système.");
     }
 
+    /**
+     * Affiche la liste de tous les paiements d'un élève en recherchant l'élève par son numéro SAAQ
+     */
     public void afficherPaiementsEleve() {
         while(true) {
             System.out.println("Recherche d'un élève par son numéro SAAQ");
@@ -978,6 +1063,9 @@ public class Main {
         }
     }
 
+    /**
+     * Affiche la liste de tous les paiements impayés
+     */
     public void afficherPaiementsImpayes() {
         System.out.println("Liste de tous les paiements impayés: ");
 
@@ -995,6 +1083,9 @@ public class Main {
 
     // Changer état
 
+    /**
+     * Change l'état d'une activité en recherchant l'activité par son ID
+     */
     public void completerActivite() {
         while(true) {
             System.out.println("Recherche d'une activité par son ID");
@@ -1023,6 +1114,9 @@ public class Main {
         }
     }
 
+    /**
+     * Change l'état d'une voiture en recherchant la voiture par sa plaque d'immatriculation
+     */
     public void changerEtatVoiture() {
         while(true) {
             System.out.println("Recherche d'une voiture par sa plaque d'immatriculation");
@@ -1050,6 +1144,9 @@ public class Main {
         }
     }
 
+    /**
+     * Change l'état d'une voiture en demandant à l'utilisateur le nouvel état
+     */
     public void subChangerEtatVoiture(Voiture voiture) {
         while(true) {
             System.out.println("Changement de l'état, choix disponibles  R (réparation), V (vendu), D (disponible).");
@@ -1072,6 +1169,9 @@ public class Main {
         }
     }
 
+    /**
+     * Change l'état d'un paiement en recherchant le paiement par son identifiant
+     */
     public void changerEtatPaiement() {
         while(true) {
             System.out.println("Recherche d'un paiement par son identifiant (format : F-AAAA-XXXXX)");
@@ -1099,6 +1199,9 @@ public class Main {
         }
     }
 
+    /**
+     * Change l'état d'un paiement en demandant à l'utilisateur le nouvel état
+     */
     public void subChangerEtatPaiement(Paiement paiement) {
         while(true) {
             System.out.println("Changement de l'état, choix disponibles  P (payé), I (impayé), PP (partiellement payé).");
@@ -1128,6 +1231,9 @@ public class Main {
         }
     }
 
+    /**
+     * Change le montant restant d'un paiement en demandant à l'utilisateur le nouveau montant
+     */
     public void montantPaye(Paiement paiement) {
         while(true) {
             System.out.println("Paiement à été partiellement payé.");
@@ -1154,6 +1260,10 @@ public class Main {
 
 
     // Création
+
+    /**
+     * Génère une facture pour un paiement en recherchant le paiement par son identifiant
+     */
     public void genererFacture() {
         while(true) {
             System.out.println("Générer une facture pour un paiement.");
@@ -1181,6 +1291,9 @@ public class Main {
         }
     }
 
+    /**
+     * Crée une facture pour un paiement et l'enregistre dans un fichier texte
+     */
     public void creationFacture(Paiement paiement) {
         File dir = new File(CSV.getDir("facturation"));
         if (!dir.exists()) dir.mkdirs();
@@ -1237,6 +1350,9 @@ public class Main {
 
     // Autres méthodes
 
+    /**
+     * Affiche les règles pour les différents types de valeurs
+     */
     public void help() {
         System.out.println("------------------------------------------------------");
         System.out.println("Voici les règles pour les différents types de valeurs");
@@ -1297,6 +1413,9 @@ public class Main {
         System.out.println("------------------------------------------------------");
     }
 
+    /**
+     * Sauvegarde toutes les données de l'auto-école dans les fichiers CSV
+     */
     public void sauvegarde() {
         autoEcole.sauvegarderEleves();
         autoEcole.sauvegarderActivites();

@@ -6,10 +6,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Classe utilitaire pour la lecture et l'écriture de fichiers CSV
+ */
 public class CSV {
     public static final int YEAR = LocalDate.now().getYear();
 
-    // Élèves
+    /**
+     * Lit les élèves à partir d'un fichier CSV
+     * @return la liste des élèves
+     */
     public static ArrayList<Eleve> lireEleves() {
         int bonneLongueur = 7;
         ArrayList<Eleve> eleves = new ArrayList<>();
@@ -41,6 +47,10 @@ public class CSV {
         return eleves;
     }
 
+    /**
+     * Écrit les élèves dans un fichier CSV
+     * @param eleves la liste des élèves
+     */
     public static void ecrireEleves(ArrayList<Eleve> eleves) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "eleves" + YEAR + ".csv"))) {
 
@@ -61,7 +71,11 @@ public class CSV {
         }
     }
 
-    // Activités
+    /**
+     * Lit les activités à partir d'un fichier CSV
+     * @param eleves la liste des élèves
+     * @return la liste des activités
+     */
     public static ArrayList<Activite> lireActivites(ArrayList<Eleve> eleves) {
         int bonneLongueur = 9;
         ArrayList<Activite> activites = new ArrayList<>();
@@ -99,6 +113,10 @@ public class CSV {
         return activites;
     }
 
+    /**
+     * Écrit les activités dans un fichier CSV
+     * @param activites la liste des activités à écrire
+     */
     public static void ecrireActivites(ArrayList<Activite> activites) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "activites" + YEAR + ".csv"))) {
 
@@ -121,7 +139,12 @@ public class CSV {
         }
     }
 
-    // Paiements
+    /**
+     * Lit les paiements à partir d'un fichier CSV
+     * @param activites la liste des activités
+     * @param eleves la liste des élèves
+     * @return la liste des paiements
+     */
     public static ArrayList<Paiement> lirePaiements(ArrayList<Activite> activites, ArrayList<Eleve> eleves) {
         int bonneLongueur = 8;
         ArrayList<Paiement> paiements = new ArrayList<>();
@@ -169,6 +192,10 @@ public class CSV {
         return paiements;
     }
 
+    /**
+     * Écrit les paiements dans un fichier CSV
+     * @param paiements la liste des paiements à écrire
+     */
     public static void ecrirePaiements(ArrayList<Paiement> paiements) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "paiements" + YEAR + ".csv"))) {
 
@@ -191,7 +218,11 @@ public class CSV {
         }
     }
 
-    // Voitures
+    /**
+     * Lit les voitures à partir d'un fichier CSV
+     * @param depensesVoiture la liste des dépenses de voiture  
+     * @return la liste des voitures
+     */
     public static ArrayList<Voiture> lireVoitures(ArrayList<DepenseVoiture> depensesVoiture) {
         int bonneLongueur = 7;
         ArrayList<Voiture> voitures = new ArrayList<>();
@@ -226,6 +257,10 @@ public class CSV {
         return voitures;
     }
 
+    /**
+     * Écrit les voitures dans un fichier CSV
+     * @param voitures la liste des voitures à écrire
+     */
     public static void ecrireVoitures(ArrayList<Voiture> voitures) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "voitures" + YEAR + ".csv"))) {
 
@@ -246,7 +281,10 @@ public class CSV {
         }
     }
 
-    // Dépenses voiture
+    /**
+     * Lit les dépenses de voiture à partir d'un fichier CSV
+     * @return la liste des dépenses de voiture
+     */
     public static ArrayList<DepenseVoiture> lireDepensesVoiture() {
         int bonneLongueur = 6;
         ArrayList<DepenseVoiture> depenses = new ArrayList<>();
@@ -280,6 +318,10 @@ public class CSV {
         return depenses;
     }
 
+    /**
+     * Écrit les dépenses de voiture dans un fichier CSV
+     * @param depenses la liste des dépenses de voiture à écrire
+     */
     public static void ecrireDepensesVoiture(ArrayList<DepenseVoiture> depenses) {
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "depenses_voiture" + YEAR + ".csv"))) {
@@ -300,7 +342,10 @@ public class CSV {
         }
     }
 
-    // Autres dépenses
+    /**
+     * Lit les autres dépenses à partir d'un fichier CSV
+     * @return la liste des autres dépenses
+     */
     public static ArrayList<AutreDepense> lireAutresDepenses() {
         int bonneLongueur = 5;
         ArrayList<AutreDepense> depenses = new ArrayList<>();
@@ -333,6 +378,10 @@ public class CSV {
         return depenses;
     }
 
+    /**
+     * Écrit les autres dépenses dans un fichier CSV
+     * @param depenses la liste des autres dépenses à écrire
+     */
     public static void ecrireAutresDepenses(ArrayList<AutreDepense> depenses) {
 
         try (PrintWriter pw = new PrintWriter(new FileWriter(getDir("data") + "autres_depenses" + YEAR + ".csv"))) {
@@ -352,7 +401,12 @@ public class CSV {
         }
     }
 
-    // Méthodes utilitaires
+    /**
+     * Cherche un élève dans une liste par son numéro SAAQ
+     * @param eleves la liste des élèves
+     * @param num le numéro SAAQ à rechercher
+     * @return l'élève trouvé ou null s'il n'est pas trouvé
+     */
     private static Eleve chercherEleve(ArrayList<Eleve> eleves, long numSAAQ) {
         for (Eleve e : eleves) {
             if (e.getNumSAAQ() == numSAAQ) {
@@ -362,6 +416,12 @@ public class CSV {
         return null;
     }
 
+    /**
+     * Filtre les dépenses de voiture par plaque d'immatriculation
+     * @param depenses la liste des dépenses de voiture
+     * @param plaque la plaque d'immatriculation à filtrer
+     * @return la liste des dépenses de voiture correspondant à la plaque
+     */
     private static ArrayList<DepenseVoiture> filtrerParPlaque(ArrayList<DepenseVoiture> depenses, String plaque) {
         ArrayList<DepenseVoiture> temp = new ArrayList<>();
         for (DepenseVoiture depense : depenses) {
@@ -371,6 +431,11 @@ public class CSV {
         return temp;
     }
 
+    /**
+     * Retourne le chemin du dossier spécifié
+     * @param folder le nom du dossier
+     * @return le chemin complet du dossier
+     */
     public static String getDir(String folder) {
         return System.getProperty("user.dir") + "\\" + folder + "\\";
     }

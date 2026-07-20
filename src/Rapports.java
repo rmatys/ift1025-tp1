@@ -8,8 +8,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe représentant les rapports générés par l'auto-école.
+ */
 public class Rapports {
 
+    /**
+     * Génère un rapport des élèves
+     * @param eleves la liste des élèves
+     */
     public static void genererRapportEleves(ArrayList<Eleve> eleves) {
         int nbrElevesActif = 0;
         int nbrElevesGradue = 0;
@@ -84,6 +91,11 @@ public class Rapports {
         }
     }
 
+    /**
+     * Génère un rapport des revenus
+     * @param activites la liste des activités
+     * @param paiements la liste des paiements
+     */
     public static void genererRapportRevenus(ArrayList<Activite> activites, ArrayList<Paiement> paiements) {
         File dir = new File(CSV.getDir("rapport"));
         if (!dir.exists()) dir.mkdirs();
@@ -186,6 +198,10 @@ public class Rapports {
         }
     }
 
+    /**
+     * Génère un rapport des dépenses voiture
+     * @param depensesVoiture la liste des dépenses voiture
+     */
     public static void genererRapportDepensesVoiture(ArrayList<DepenseVoiture> depensesVoiture) {
         File dir = new File(CSV.getDir("rapport"));
         if (!dir.exists()) dir.mkdirs();
@@ -260,6 +276,10 @@ public class Rapports {
         }
     }
 
+    /**
+     * Génère un rapport des autres dépenses
+     * @param autresDepenses la liste des autres dépenses
+     */
     public static void genererRapportAutresDepenses(ArrayList<AutreDepense> autresDepenses) {
         File dir = new File(CSV.getDir("rapport"));
         if (!dir.exists()) dir.mkdirs();
